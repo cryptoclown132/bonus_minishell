@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 14:26:07 by jkroger           #+#    #+#             */
-/*   Updated: 2023/03/16 16:03:09 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/07/25 17:46:02 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	**copy_env(char **envp)
 	env = malloc((count_env_len(envp) + 1) * sizeof(char *));
 	if (!env)
 		return (set_exit_status("Failed to Malloc", 1));
+	
 	i = -1;
 	while (envp[++i])
 		env[i] = ft_strdup(envp[i]);

@@ -52,9 +52,8 @@ char	*itw_loop(char *input, char *tkn, int *j, char **envp)
 	}
 	if (t.tmp != '\'')
 		t.tmp_str = expander(t.tmp_str, envp);
-	tkn = free_both_strjoin(tkn, t.tmp_str);
+	tkn = free_both_strjoin(tkn, t.tmp_str);	
 	*j = t.k + 1;
-
 	return (tkn);
 }
 

@@ -32,9 +32,7 @@ char	*edited_strjoin(char *s1, char *s2)
 	}
 	j = 0;
 	while (s2[j])
-	{
 		ptr[i++] = s2[j++];
-	}
 	ptr[i] = '\0';
 	free(s1);
 	return (ptr);

@@ -58,12 +58,12 @@ void	here_doc(char* limiter, int *infile, char **env, cmd_tree *cmd_node)
 		*infile = fd[0]; //check if needs to be closed
 }
 
-cmd_tree *parse_redirection(t_tokens **token_lst)
+cmd_tree *parse_redirection(t_tokens **token_lst, char **envp)
 {
 	cmd_tree	*cmd_node;
 	char		*file;
 	
-	cmd_node = parse_command(token_lst);
+	cmd_node = parse_command(token_lst, envp);
 	while (*token_lst && ((*token_lst)->type == TOK_IN || (*token_lst)->type == TOK_OUT
         || (*token_lst)->type == TOK_APP || (*token_lst)->type == TOK_DOC))
     {

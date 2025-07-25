@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:48:59 by jkroger           #+#    #+#             */
-/*   Updated: 2025/07/24 16:38:32 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/07/25 19:14:00 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,12 @@ void free_cmd_tree(cmd_tree *node)
     free(node);
 }
 
-int	init_cmd_tree(t_tokens **token_lst, cmd_tree **cmd_lst) // , char **envp
+int	init_cmd_tree(t_tokens **token_lst, cmd_tree **cmd_lst, char **envp) // , char **envp
 {
     t_tokens    *curr_token_lst;
     
     curr_token_lst = *token_lst;
-    *cmd_lst = parse_or(&curr_token_lst);    
+    *cmd_lst = parse_or(&curr_token_lst, envp);    
 
     
 	// while (*token_lst != NULL && g_exit_status != 130)

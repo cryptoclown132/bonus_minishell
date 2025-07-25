@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 14:34:39 by jkroger           #+#    #+#             */
-/*   Updated: 2025/07/24 16:45:42 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/07/25 18:08:27 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,8 @@ char	*expander(char *token, char **envp);
 /* env_var_utils.c */
 char	*var_finder(char **envp, char *var);
 void	var_exist(char *token, char **envp, int *i, char **var_value);
+
+// char	*var_exist(char *token, char **envp, int *i, char **var_value);
 int	get_len(char *token, char **envp);
 char	*get_var(char *token, char **envp);
 
@@ -285,22 +287,22 @@ char	*get_var(char *token, char **envp);
 /**********/
 
 /* parser.c */
-cmd_tree *new_node(node_type t);
+cmd_tree *new_node(node_type t, char **envp);
 cmd_tree	*parse(cmd_tree *cmd_lst, char **input, char **envp);
 
 /* parse_and_or.c */
-cmd_tree *parse_or(t_tokens **token_lst);
-cmd_tree *parse_and(t_tokens **token_lst);
+cmd_tree *parse_or(t_tokens **token_lst, char **envp);
+cmd_tree *parse_and(t_tokens **token_lst, char **envp);
 
 /* parse_pipe.c */
-cmd_tree *parse_pipeline(t_tokens **token_lst);
+cmd_tree *parse_pipeline(t_tokens **token_lst, char **envp);
 
 /* init_cmd_tree.c */
 void	free_string_array(char **arr);
-int	init_cmd_tree(t_tokens **token_lst, cmd_tree **cmd_lst);
+int	init_cmd_tree(t_tokens **token_lst, cmd_tree **cmd_lst, char **envp);
 
 /* parse_cmd.c */
-cmd_tree *parse_command(t_tokens **token_lst);
+cmd_tree *parse_command(t_tokens **token_lst, char **envp);
 
 /* heredoc_utils.c */
 void	here_doc_loop(char	*limiter, int fd, char **env);
@@ -325,7 +327,7 @@ char	**copy_env(char **envp);
 
 
 /* parse_redir.c */
-cmd_tree *parse_redirection(t_tokens **token_lst);
+cmd_tree *parse_redirection(t_tokens **token_lst, char **envp);
 
 
 /* signals.c */

@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 20:51:29 by jkroger           #+#    #+#             */
-/*   Updated: 2025/05/01 12:49:53 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/07/25 13:41:21 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*var_finder(char **envp, char *var)
 	return (NULL);
 }
 
-char	*var_exist(char *token, char **envp, int *i, char **var_value)
+void	var_exist(char *token, char **envp, int *i, char **var_value)
 {
 	int		j;
 
@@ -52,7 +52,7 @@ char	*var_exist(char *token, char **envp, int *i, char **var_value)
 	else
 		*var_value = var_finder(envp, ft_substr(token, *i + 1, j - *i - 1));
 	*i = j - 1;
-	return *var_value;
+	// return *var_value;
 }
 
 int	get_len(char *token, char **envp)
@@ -65,7 +65,7 @@ int	get_len(char *token, char **envp)
 	var_len = 0;
 	while (token[++i])
 	{
-		if (token[i] != '$' || token[i] == '$' && token[i + 1] == '$')
+		if (token[i] != '$' || (token[i] == '$' && token[i + 1] == '$'))
 			var_len++;
 		else
 		{
@@ -82,7 +82,8 @@ void	concat_var(char *token, char **envp, char **var_value, int *i, int *j)
 	char	*tmp;
 	int		k;
 	
-	tmp = var_exist(token, envp, i, tmp);
+	tmp = NULL;
+	var_exist(token, envp, i, &tmp);
 	k = 0;
 	if (tmp)
 	{

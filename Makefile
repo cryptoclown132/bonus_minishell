@@ -1,10 +1,9 @@
 
 NAME = minishell
 
-#SRC = ${shell find ./parser -name "*.c" && find ./lexer_expander -name "*.c" && find ./builtins -name "*.c" && echo *.c}
+SRC_DIR = .
 
-SRC = ${shell find ./parser -name "*.c" && find ./builtins -name "*.c" && echo *.c}
-
+SRC     = $(shell find $(SRC_DIR) -name "*.c")
 
 OBJ = $(patsubst %.c, %.o, $(SRC))
 
@@ -37,3 +36,4 @@ re: fclean all
 bonus: all
 
 .PHONY: all clean fclean re bonus
+

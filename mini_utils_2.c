@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 18:26:12 by jkroger           #+#    #+#             */
-/*   Updated: 2025/07/24 16:44:05 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/07/25 18:44:30 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@ char	*free_both_strjoin(char *s1, char *s2)
 	ptr = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!ptr)
 		return (set_exit_status("Failed to Malloc", 1));
-	i = -1;
+	i = 0;
 	if (s1)
 	{
-		while (s1[++i])
+		while (s1[i])
+		{
 			ptr[i] = s1[i];
+			i++;
+		}
 		free(s1);
 	}
 	if (s2)

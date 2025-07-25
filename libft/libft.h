@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 12:58:59 by jkroger           #+#    #+#             */
-/*   Updated: 2022/10/02 00:34:01 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/07/25 17:37:29 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "get_next_line.h"
-# include "get_next_line_bonus.h"
 # include "ft_printf.h"
 
 typedef struct s_list
