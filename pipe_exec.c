@@ -42,11 +42,11 @@ void	redirect_child(int *pipefd, cmd_tree *cmd_lst)
 int exec_pipe(cmd_tree *cmd_lst)
 {
     int pipefd[2];
+    
     if (pipe(pipefd) == -1) {
         perror("pipe");
         exit(1);
     }
-
     pid_t left_pid = fork();
     if (left_pid == 0)
         redirect_child(pipefd, cmd_lst);

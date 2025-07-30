@@ -100,26 +100,25 @@ int	minishell(cmd_tree *cmd_lst, char ***env)
 	input = user_input();
 	if (!input)
 	{
-		printf("exit\n");
+        printf("exit\n");
 		g_exit_status = 130;
 		free_env(cmd_lst);
 		exit(g_exit_status);
 	}
 	cmd_lst = parse(cmd_lst, &input, *env);
-
+    
 	add_history(input);
 	free(input);
-
-	if (cmd_lst->err == -2 || g_exit_status == 130)
+	if (g_exit_status == 130 || !cmd_lst || cmd_lst->err == -2)
 	{
-		// free_cmd_lst(cmd_lst);
+        // free_cmd_lst(cmd_lst);
 		return (0);
 	}
 	var_lst(cmd_lst);
-	
 	// print_cmd_tree(cmd_lst, 5);
 	execute_node(cmd_lst, true);
-
+    // printf("here\n");
+    
 	// run_cmds_loop(cmd_lst);
 	
 	// free(env)

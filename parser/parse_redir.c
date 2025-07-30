@@ -54,8 +54,8 @@ void	here_doc(char* limiter, int *infile, char **env, cmd_tree *cmd_node)
 	}
 	here_doc_loop(limiter, fd[1], env);
 	close(fd[1]);
-	if (*infile != -1)
-		*infile = fd[0]; //check if needs to be closed
+	// if (*infile != -1)
+	*infile = fd[0]; //check if needs to be closed
 }
 
 cmd_tree *parse_redirection(t_tokens **token_lst, char **envp)
@@ -65,13 +65,14 @@ cmd_tree *parse_redirection(t_tokens **token_lst, char **envp)
 	
 	cmd_node = parse_command(token_lst, envp);
 	while (*token_lst && ((*token_lst)->type == TOK_IN || (*token_lst)->type == TOK_OUT
-        || (*token_lst)->type == TOK_APP || (*token_lst)->type == TOK_DOC))
+	|| (*token_lst)->type == TOK_APP || (*token_lst)->type == TOK_DOC))
     {
 		// if (f->type != TOK_WORD) {
-		// 	fprintf(stderr, "Parse error: expected filename\n");   check << ()
-		// 	exit(1);
-		// }
-		file = (*token_lst)->next->token;
+			// 	fprintf(stderr, "Parse error: expected filename\n");   check << ()
+			// 	exit(1);
+			// }
+		
+		file = (*token_lst)->token;
 		if ((*token_lst)->type == TOK_IN)
 			cmd_node->infile = input_redir(file, cmd_node->infile, cmd_node);
 		else if ((*token_lst)->type == TOK_OUT)
@@ -81,7 +82,7 @@ cmd_tree *parse_redirection(t_tokens **token_lst, char **envp)
 		else
 			cmd_node->outfile = ft_append(file, cmd_node->outfile, cmd_node);
 		
-		*token_lst = (*token_lst)->next->next; // check later
+		*token_lst = (*token_lst)->next; // check later
 	}
 	return cmd_node;
 }

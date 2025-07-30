@@ -5,8 +5,8 @@ cmd_tree *new_node(node_type t, char **envp)
 {
 	cmd_tree *n = ft_calloc(1, sizeof(*n));
 	n->type = t;
-    n->infile = 0;
-    n->outfile = 1;
+    n->infile = -1;
+    n->outfile = -1;
     n->err = 0;
     n->err_file = NULL;
 
@@ -83,11 +83,11 @@ cmd_tree	*parse(cmd_tree *cmd_lst, char **input, char **envp)
 	token_lst = NULL;
 	if (!lex_error_check(*input))
 	{
-		cmd_lst->err = -2;
+        if (cmd_lst)
+        	cmd_lst->err = -2;
 		return (cmd_lst);
 	}
-
-
+	
     prev_exit_status = g_exit_status;
     *input = check_for_open_and(*input); //must be error: (echo hello &&)
 
@@ -106,7 +106,6 @@ cmd_tree	*parse(cmd_tree *cmd_lst, char **input, char **envp)
     g_exit_status = 0;
 	if (init_cmd_tree(&token_lst, &cmd_lst, envp) != 1)//, envp
     	cmd_lst->err = -2;	
-
 	//free(token_lst)
 
 	return (cmd_lst);

@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 18:26:12 by jkroger           #+#    #+#             */
-/*   Updated: 2025/07/25 18:44:30 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/07/28 19:34:33 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,14 @@ void	free_env(cmd_tree *cmd)
 	int	i;
 
 	i = 0;
-	if (cmd->env)
+	if (cmd && cmd->env)
 	{
 		while (cmd->env[i])
 			free(cmd->env[i++]);
 		free(cmd->env);
 	}
 	i = 0;
-	if (cmd->var_lst)
+	if (cmd && cmd->var_lst)
 	{
 		while (cmd->var_lst[i])
 			free(cmd->var_lst[i++]);

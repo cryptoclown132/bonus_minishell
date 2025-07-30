@@ -13,7 +13,6 @@ int execute_node(cmd_tree *cmd_lst, bool in_parent) {
 
 	if (cmd_lst->type == NODE_EXEC)
     {
-
         // printf("in exec nodesdfsgsf\n");
 		return exec_cmd(cmd_lst, in_parent);
     }
@@ -48,7 +47,7 @@ int execute_node(cmd_tree *cmd_lst, bool in_parent) {
 
 
 
-
+	//cat << EOF | ls -a
 
 int main(int argc, char *argv[], char **envp)
 {
