@@ -18,13 +18,11 @@ void	redir_files(cmd_tree *cmd_lst)
 {
 	if (cmd_lst->infile != -1)
 	{
-		printf("hereY\n");
         dup2(cmd_lst->infile, STDIN_FILENO);
         close(cmd_lst->infile);
     }
     if (cmd_lst->outfile != -1)
 	{
-		printf("also here\n");
         dup2(cmd_lst->outfile, STDOUT_FILENO);
         close(cmd_lst->outfile);
     }
@@ -33,10 +31,7 @@ void	redir_files(cmd_tree *cmd_lst)
 int exec_cmd(cmd_tree *cmd_lst, bool in_parent)
 {
 	if (in_parent && run_builtin(cmd_lst))
-	{
-		printf("first if\n");
 		return (0);
-	}
 
 	pid_t pid = fork();
 	if (pid < 0) {
