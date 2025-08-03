@@ -280,6 +280,9 @@ void	var_exist(char *token, char **envp, int *i, char **var_value);
 int	get_len(char *token, char **envp);
 char	*get_var(char *token, char **envp);
 
+/* wildcard.c */
+char  *wildcard(char *str);
+
 
 
 /**********/
