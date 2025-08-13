@@ -36,7 +36,7 @@ char	**get_cmd_split(t_tokens **token_lst)
 	return new_cmd_split;
 }
 
-cmd_tree *parse_command(t_tokens **token_lst, char **envp)
+cmd_tree *parse_command(t_tokens **token_lst, env_var environ)
 {
 	cmd_tree	*cmd_node;
 	cmd_tree	*child;
@@ -44,24 +44,25 @@ cmd_tree *parse_command(t_tokens **token_lst, char **envp)
     if (*token_lst && (*token_lst)->type == TOK_LPAREN) {
 		*token_lst = (*token_lst)->next;
 
-		child = parse_or(token_lst, envp);
+		child = parse_or(token_lst, environ);
 
 		*token_lst = (*token_lst)->next;
 
-		cmd_node = new_node(NODE_SUBSHELL, envp);
+		cmd_node = new_node(NODE_SUBSHELL);
 		cmd_node->subshell.child = child;
 		return cmd_node;
 	}
-	if ((*token_lst)->type != TOK_WORD) {
+	
+	// printf("type : %i\n", (*token_lst)->type);
+	if ((*token_lst)->type != TOK_WORD && (*token_lst)->type != TOK_EQUAL) {
 		fprintf(stderr, "Parse error: expected word or '('\n");
 		exit(1);
 	}
-	cmd_node = new_node(NODE_EXEC, envp);
+	cmd_node = new_node(NODE_EXEC);
 	
 	cmd_node->exec.cmd_split = get_cmd_split(token_lst);
-	cmd_node->exec.cmd_path = get_cmd_path(cmd_node->env,
-				cmd_node->exec.cmd_split[0], cmd_node);
-	
+	cmd_node->exec.cmd_path = get_cmd_path(environ,
+		cmd_node->exec.cmd_split[0], cmd_node);	
 	return cmd_node;
 }
 

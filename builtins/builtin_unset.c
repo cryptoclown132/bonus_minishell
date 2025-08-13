@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 00:59:06 by fjerinic          #+#    #+#             */
-/*   Updated: 2025/04/25 17:04:32 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/13 16:04:19 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,40 +70,67 @@ int	check_valid_unset_variable(char *cur_cmd)
 	return (1);
 }
 
-void	reorder_array(cmd_tree *cmd_struct, int n)
+// void	reorder_array_env(env_var *environ, int n)
+// {
+// 	while (environ->env[n + 1])
+// 	{
+// 		free(environ->env[n]);
+// 		environ->env[n] = ft_strdup(
+// 				environ->env[n + 1]);
+// 		n++;
+// 	}
+// 	free(environ->env[n]);
+// 	environ->env[n] = NULL;
+// }
+
+char	**reorder_array(char **env, int n)
 {
-	while (cmd_struct->env[n + 1])
+	while (env[n + 1])
 	{
-		free(cmd_struct->env[n]);
-		cmd_struct->env[n] = ft_strdup(
-				cmd_struct->env[n + 1]);
+		free(env[n]);
+		env[n] = ft_strdup(env[n + 1]);
 		n++;
 	}
-	free(cmd_struct->env[n]);
-	cmd_struct->env[n] = NULL;
+	free(env[n]);
+	env[n] = NULL;
+	return (env);
 }
 
-void	unset(cmd_tree *cmd_struct)
+void	arrange_env(cmd_tree *cmd_struct, env_var *environ, int n, int j)
+{
+	if (environ->env && environ->env[n] && !ft_strncmp(environ->env[n],
+		cmd_struct->exec.cmd_split[j],
+		ft_strlen(cmd_struct->exec.cmd_split[j])))
+	environ->env = reorder_array(environ->env, n);
+	else
+	{
+		n = 0;
+		while (environ->vars && environ->vars[n] && ft_strncmp(environ->vars[n],
+				cmd_struct->exec.cmd_split[j],
+				ft_strlen(cmd_struct->exec.cmd_split[j])))
+			n++;
+		if (environ->vars && environ->vars[n] && !ft_strncmp(environ->vars[n],
+			cmd_struct->exec.cmd_split[j],
+			ft_strlen(cmd_struct->exec.cmd_split[j])))
+			environ->vars = reorder_array(environ->vars, n);
+	}
+}
+
+void	unset(cmd_tree *cmd_struct, env_var *environ)
 {
 	int	n;
 	int	j;
 
-	j = 1;
-	while (cmd_struct->exec.cmd_split[j])
+	j = -1;
+	while (cmd_struct->exec.cmd_split[++j])
 	{
 		if (!check_valid_unset_variable(cmd_struct->exec.cmd_split[j]))
 			return ;
 		n = 0;
-		while (cmd_struct->env[n] && ft_strncmp(cmd_struct->env[n],
-				cmd_struct->exec.cmd_split[j],
-				ft_strlen(cmd_struct->exec.cmd_split[j])))
+		while (environ->env && environ->env[n] && ft_strncmp(environ->env[n],
+			cmd_struct->exec.cmd_split[j],
+			ft_strlen(cmd_struct->exec.cmd_split[j])))
 			n++;
-		if (cmd_struct->env[n] && !ft_strncmp(cmd_struct->env[n],
-				cmd_struct->exec.cmd_split[j],
-				ft_strlen(cmd_struct->exec.cmd_split[j])))
-		{
-			reorder_array(cmd_struct, n);
-		}
-		j++;
+		arrange_env(cmd_struct, environ, n, j);
 	}
 }

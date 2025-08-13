@@ -1,7 +1,7 @@
 
 #include "../minishell.h"
 
-cmd_tree *new_node(node_type t, char **envp)
+cmd_tree *new_node(node_type t)
 {
 	cmd_tree *n = ft_calloc(1, sizeof(*n));
 	n->type = t;
@@ -12,7 +12,7 @@ cmd_tree *new_node(node_type t, char **envp)
 
     // check where to init
     
-    n->env = copy_env(envp);
+    // n->env = copy_env(envp);
     // n->var_lst
 
 	return n;
@@ -75,7 +75,7 @@ char    *check_for_open_and(char *input)
 }
 
 
-cmd_tree	*parse(cmd_tree *cmd_lst, char **input, char **envp)
+cmd_tree	*parse(cmd_tree *cmd_lst, char **input, env_var environ)
 {
 	t_tokens	*token_lst;
     int         prev_exit_status;
@@ -98,14 +98,14 @@ cmd_tree	*parse(cmd_tree *cmd_lst, char **input, char **envp)
     }
         //handle error free etc.
     
-	
+        
     g_exit_status = prev_exit_status;
-	token_lst = lexer(token_lst, *input, envp);
-
-
+    token_lst = lexer(token_lst, *input, environ);
+    
+    
     g_exit_status = 0;
-	if (init_cmd_tree(&token_lst, &cmd_lst, envp) != 1)//, envp
-    	cmd_lst->err = -2;	
+	if (init_cmd_tree(&token_lst, &cmd_lst, environ) != 1)//, envp
+        cmd_lst->err = -2;	
 	//free(token_lst)
 
 	return (cmd_lst);

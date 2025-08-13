@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:56:19 by jkroger           #+#    #+#             */
-/*   Updated: 2025/04/25 17:03:45 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/13 17:43:50 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ char	*find_var(char **vars, char *var)
 
 	i = 0;
 	tmp = ft_strjoin(var, "=");
-	if (!vars)
+	if (!tmp)
 		return (set_exit_status("Failed to Malloc", 1));
-	while (vars[i])
+	while (vars && vars[i])
 	{
 		if (ft_strnstr(vars[i], tmp, ft_strlen(tmp)))
 		{
@@ -34,7 +34,7 @@ char	*find_var(char **vars, char *var)
 	return (NULL);
 }
 
-void	add_env_loop(cmd_tree *cmd, char **envcp, char *var)
+void	add_env_loop(env_var *environ, char **envcp, char *var)
 {
 	int	i;
 
@@ -42,31 +42,43 @@ void	add_env_loop(cmd_tree *cmd, char **envcp, char *var)
 	while (envcp && envcp[i])
 	{
 		if (!ft_strncmp(envcp[i], var, len_equal(var)))
-			cmd->env[i] = ft_strdup(var);
+			environ->env[i] = ft_strdup(var);
 		else
-			cmd->env[i] = ft_strdup(envcp[i]);
+			environ->env[i] = ft_strdup(envcp[i]);
 		i++;
 	}
 	if (!ft_var(envcp, var))
-		cmd->env[i++] = ft_strdup(var);
-	cmd->env[i] = NULL;
+		environ->env[i++] = ft_strdup(var);
+	environ->env[i] = NULL;
 }
 
-void	add_env(cmd_tree *cmd, char *var)
+void	add_env(env_var *environ, char *var)
 {
 	int		i;
 	char	**envcp;
 
 	if (!var)
 		return ;
-	envcp = cmd->env;
+	envcp = environ->env;
+	
+	if (find_var_in_env(environ->vars, var))
+		del_var(environ, var);
+	
 	if (ft_var(envcp, var))
-		cmd->env = malloc((count_env_len(envcp) + 1) * sizeof(char *));
+	{
+		// int z = 0;
+		// while(environ->env[z] && z < 5)
+		// 	printf("xy = %s\n", environ->env[z++]);
+		environ->env = malloc((count_env_len(envcp) + 1) * sizeof(char *));
+		
+	}
 	else
-		cmd->env = malloc((count_env_len(envcp) + 2) * sizeof(char *));
-	if (!cmd->env)
+	{
+		environ->env = malloc((count_env_len(envcp) + 2) * sizeof(char *));
+	}	
+	if (!environ->env)
 		return (set_exit_void("Failed to Malloc", 1));
-	add_env_loop(cmd, envcp, var);
+	add_env_loop(environ, envcp, var);
 	if (envcp)
 	{
 		i = -1;
@@ -99,29 +111,32 @@ char	**sort_export(char **expo)
 	return (expo);
 }
 
-void	builtin_export(cmd_tree *cmd)
+void	builtin_export(cmd_tree *cmd, env_var *environ)
 {
 	int	i;
 	int	j;
 
 	if (!cmd->exec.cmd_split[1])
-		export_without_args(cmd);
+		export_without_args(environ);	
 	i = 0;
 	while (cmd->exec.cmd_split[++i])
 	{
-		j = export_err(cmd, cmd->exec.cmd_split[i], i);
+		j = export_err(cmd, cmd->exec.cmd_split[i], i, environ);
 		if (j == 0 && i == 1)
 			return ;
 		if (j == 1)
 			continue ;
 		if (ft_strchr(cmd->exec.cmd_split[i], '='))
-			add_env(cmd, cmd->exec.cmd_split[i]);
+			add_env(environ, cmd->exec.cmd_split[i]);
 		else
 		{
-			if (find_var(cmd->var_lst, cmd->exec.cmd_split[i]))
+			if (find_var(environ->vars, cmd->exec.cmd_split[i]))
 			{
-				add_env(cmd, cmd->exec.cmd_split[i]);
-				del_var(cmd, cmd->exec.cmd_split[i]);
+				add_env(environ, find_var(environ->vars, cmd->exec.cmd_split[i]));
+		// 		int z = 0;
+		// while(environ->env[z] && z < 5)
+		// 	printf("xy = %s\n", environ->env[z++]);
+				del_var(environ, cmd->exec.cmd_split[i]);
 			}
 		}
 	}

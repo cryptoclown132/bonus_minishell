@@ -1,7 +1,7 @@
 
 #include "minishell.h"
 
-int exec_subshell(cmd_tree *cmd_lst)
+int exec_subshell(cmd_tree *cmd_lst, env_var *environ)
 {
 	pid_t pid = fork();
 	if (pid < 0) {
@@ -11,7 +11,7 @@ int exec_subshell(cmd_tree *cmd_lst)
 	if (pid == 0) {
 
 	// in subshell: run subtree and exit
-		exit(execute_node(cmd_lst->subshell.child, true));
+		exit(execute_node(cmd_lst->subshell.child, true, environ));	
 	}
 	int status;
 	waitpid(pid, &status, 0);

@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:01:04 by jkroger           #+#    #+#             */
-/*   Updated: 2023/03/12 17:42:04 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/12 21:24:56 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*expander(char *token, char **envp)
+char	*expander(char *token, env_var environ)
 {
 	t_expan	e;
 
 	e.i = -1;
-	e.tmp_var = NULL;
+	e.tmp_var = NULL;	
 	while (token[++e.i])
 	{
 		if (token[e.i] == '$' && token[e.i + 1] != ' '
 			&& token[e.i + 1] != '\0')
 		{
-			e.tmp_var = get_var(token, envp);
+			e.tmp_var = get_var(token, environ);
 			free(token);
 			break ;
 		}

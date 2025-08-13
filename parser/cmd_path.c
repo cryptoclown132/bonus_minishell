@@ -6,16 +6,16 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:16:41 by jkroger           #+#    #+#             */
-/*   Updated: 2025/04/29 18:32:21 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/12 21:18:09 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*path_finder(char **env)
+char	*path_finder_2(char **env)
 {
 	int	i;
-
+	
 	i = -1;
 	while (env[++i])
 	{
@@ -24,6 +24,17 @@ char	*path_finder(char **env)
 	}
 	return (NULL);
 }
+
+char	*path_finder(env_var environ)
+{
+	char *envp;
+
+	envp = path_finder_2(environ.env);
+	if (!envp)
+		envp = path_finder_2(environ.vars);
+	return (envp);
+}
+
 
 char	*get_cmd_path2(char *envp, char *cmd)
 {
@@ -48,7 +59,7 @@ char	*get_cmd_path2(char *envp, char *cmd)
 	return (NULL);
 }
 
-char	*get_cmd_path(char **env, char *cmd, cmd_tree *cmd_node)
+char	*get_cmd_path(env_var environ, char *cmd, cmd_tree *cmd_node)
 {
 	char	*envp;
 
@@ -61,7 +72,7 @@ char	*get_cmd_path(char **env, char *cmd, cmd_tree *cmd_node)
 		else if (cmd_node->err == 0)
 			cmd_node->err = 2;
 	}
-	envp = path_finder(env);
+	envp = path_finder(environ);
 	if (!envp)
 	{
 		if (is_builtin(cmd) != 0 && cmd_node->err == 0)

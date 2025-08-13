@@ -1,23 +1,23 @@
 
 #include "minishell.h"
 
-int exec_and(cmd_tree *cmd_lst)
+int exec_and(cmd_tree *cmd_lst, env_var *environ)
 {
-    int status = execute_node(cmd_lst->and.left, true);
+    int status = execute_node(cmd_lst->and.left, true, environ);
     if (status == 0) {
-        status = execute_node(cmd_lst->and.right, true);
+        status = execute_node(cmd_lst->and.right, true, environ);
     } else {
         // printf("AND: left failed (%d), skipping right side\n", status);
     }
     return status;
 }
 
-int exec_or(cmd_tree *cmd_lst)
+int exec_or(cmd_tree *cmd_lst, env_var *environ)
 {
-    int status = execute_node(cmd_lst->or.left, true);
+    int status = execute_node(cmd_lst->or.left, true, environ);
 
     if (status != 0) {
-        status = execute_node(cmd_lst->or.right, true);
+        status = execute_node(cmd_lst->or.right, true, environ);
     } else {
         // printf("OR: left succeeded, skipping right side\n");
     }

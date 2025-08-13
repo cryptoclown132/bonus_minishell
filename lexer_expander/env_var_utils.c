@@ -6,43 +6,52 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 20:51:29 by jkroger           #+#    #+#             */
-/*   Updated: 2025/07/25 13:41:21 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/12 22:20:29 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*var_finder(char **envp, char *var)
+char	*var_finder_2(char **env, char *var)
 {
-	int	i;
 	int	j;
-
+	int	i;
+	
 	i = -1;
-	var = edited_strjoin(var, "=");
-	if (!var)
-		return (set_exit_status("Failed to Malloc", 1));
-	while (envp && envp[++i])
+	while (env && env[++i])
 	{
-		if (ft_strnstr(envp[i], var, ft_strlen(var)))
+		if (ft_strnstr(env[i], var, ft_strlen(var)))
 		{
 			j = ft_strlen(var);
-			free(var);
-			return (ft_substr(envp[i], j, ft_strlen(envp[i]) - j + 1));
+			return (ft_substr(env[i], j, ft_strlen(env[i]) - j + 1));
 		}
 	}
-	free(var);
-	return (NULL);
+	return NULL;
 }
 
-void	var_exist(char *token, char **envp, int *i, char **var_value)
+char	*var_finder(env_var environ, char *var)
+{
+	char	*var_found;
+
+	var = edited_strjoin(var, "=");
+	if (!var)
+		return (set_exit_status("Failed to Malloc", 1));	
+	var_found = var_finder_2(environ.env, var);
+	if (!var_found)
+		var_found = var_finder_2(environ.vars, var);
+	free(var);
+	return (var_found);
+}
+
+void	var_exist(char *token, env_var environ, int *i, char **var_value)
 {
 	int		j;
 
 	j = *i + 1;
 	while ((token[j] >= 'a' && token[j] <= 'z')
-		|| (token[j] >= 'A' && token[j] <= 'Z')
-		|| (token[j] >= '0' && token[j] <= '9')
-		|| token[j] != '_')
+	|| (token[j] >= 'A' && token[j] <= 'Z')
+	|| (token[j] >= '0' && token[j] <= '9')
+	|| token[j] == '_' || token[j] == '/')
 		j++;
 	if (token[*i] == '$' && token[*i + 1] == '?')
 	{
@@ -50,12 +59,13 @@ void	var_exist(char *token, char **envp, int *i, char **var_value)
 		j++;
 	}
 	else
-		*var_value = var_finder(envp, ft_substr(token, *i + 1, j - *i - 1));
-	*i = j - 1;
+		*var_value = var_finder(environ, ft_substr(token, *i + 1, j - *i - 1));
+	// *i = j - 1;
+	*i = j;
 	// return *var_value;
 }
 
-int	get_len(char *token, char **envp)
+int	get_len(char *token, env_var environ)
 {
 	int		i;
 	int		var_len;
@@ -69,7 +79,7 @@ int	get_len(char *token, char **envp)
 			var_len++;
 		else
 		{
-			var_exist(token, envp, &i, &var_value);
+			var_exist(token, environ, &i, &var_value);
 			var_len += ft_strlen(var_value);
 			free(var_value);
 		}
@@ -77,29 +87,30 @@ int	get_len(char *token, char **envp)
 	return (var_len);
 }
 
-void	concat_var(char *token, char **envp, char **var_value, int *i, int *j)
+void	concat_var(char *token, env_var environ, char **var_value, int *i, int *j)
 {
 	char	*tmp;
 	int		k;
 	
 	tmp = NULL;
-	var_exist(token, envp, i, &tmp);
+	var_exist(token, environ, i, &tmp);
+	
 	k = 0;
 	if (tmp)
 	{
 		while (tmp && tmp[k])
-			*var_value[*j++] = tmp[k++];
+			(*var_value)[(*j)++] = tmp[k++];
 		free(tmp);
 	}
 }
 
-char	*get_var(char *token, char **envp)
+char	*get_var(char *token, env_var environ)
 {
 	char	*var_value;
 	int		i;
 	int		j;
-
-	var_value = malloc((get_len(token, envp) + 1) * sizeof(char));
+	
+	var_value = malloc((get_len(token, environ) + 1) * sizeof(char));
 	if (!var_value)
 		return (set_exit_status("Failed to Malloc", 1));
 	i = 0;
@@ -107,7 +118,7 @@ char	*get_var(char *token, char **envp)
 	while (token[i])
 	{
 		if (token[i] == '$' && token[i + 1] != '$')
-			concat_var(token, envp, &var_value, &i, &j);
+			concat_var(token, environ, &var_value, &i, &j);
 		else
 			var_value[j++] = token[i++];
 	}

@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 15:41:01 by jkroger           #+#    #+#             */
-/*   Updated: 2025/07/29 20:19:12 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/12 16:57:20 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	is_dollar(char *input)
 	return (0);
 }
 
-void	here_doc_loop(char	*limiter, int fd, char **env)
+void	here_doc_loop(char	*limiter, int fd, env_var environ)
 {
 	char		*input;
 	char		*tmp;
@@ -38,7 +38,7 @@ void	here_doc_loop(char	*limiter, int fd, char **env)
 		if (is_dollar(input))
 		{
 			tmp = input;
-			input = get_var(tmp, env);
+			input = get_var(tmp, environ);
 			free(tmp);
 		}
 		write(fd, input, ft_strlen(input));

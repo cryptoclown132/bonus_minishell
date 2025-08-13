@@ -27,7 +27,7 @@ t_tokens	*init_token(char *input, int *i, int token_type)
 	return (token);
 }
 
-char	*itw_loop(char *input, char *tkn, int *j, char **envp)
+char	*itw_loop(char *input, char *tkn, int *j, env_var environ)
 {
 	t_itw_loop	t;
 
@@ -51,13 +51,13 @@ char	*itw_loop(char *input, char *tkn, int *j, char **envp)
 		t.k--;
 	}
 	if (t.tmp != '\'')
-		t.tmp_str = expander(t.tmp_str, envp);
+		t.tmp_str = expander(t.tmp_str, environ);
 	tkn = free_both_strjoin(tkn, t.tmp_str);	
 	*j = t.k + 1;
 	return (tkn);
 }
 
-t_tokens	*init_token_word(char *input, int *i, char **envp)
+t_tokens	*init_token_word(char *input, int *i, env_var environ)
 {
 	int			j;
 	char		*tkn;
@@ -69,7 +69,7 @@ t_tokens	*init_token_word(char *input, int *i, char **envp)
 		&& input[j] != '<' && input[j] != '>' && input[j] != '&'
 		&& input[j] != '(' && input[j] != ')')
 	{
-		tkn = itw_loop(input, tkn, &j, envp);
+		tkn = itw_loop(input, tkn, &j, environ);
 		*i = j;
 	}
 	*i = j - 1;
@@ -80,7 +80,7 @@ t_tokens	*init_token_word(char *input, int *i, char **envp)
 	return (token);
 }
 
-t_tokens	*init_redir(char *input, int *i, int type, char **envp)
+t_tokens	*init_redir(char *input, int *i, int type, env_var environ)
 {
 	t_tokens	*token;
 	int			j;
@@ -91,7 +91,7 @@ t_tokens	*init_redir(char *input, int *i, int type, char **envp)
 	else
 		j += 2;
 	*i = space_len(input, &j);
-	token = init_token_word(input, &j, envp);
+	token = init_token_word(input, &j, environ);
 	token->type = type;
 	*i = j;
 	return (token);

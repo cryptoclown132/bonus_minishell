@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 17:12:06 by jkroger           #+#    #+#             */
-/*   Updated: 2025/04/25 17:03:11 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/12 19:50:56 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ char	**put_quotes(char **expo)
 	return (expo);
 }
 
-void	export_without_args(cmd_tree *cmd)
+void	export_without_args(env_var *environ)
 {
 	char	**expo;
 	int		i;
 
-	expo = copy_env(cmd->env);
+	expo = copy_env(environ->env);
 	expo = sort_export(expo);
 	expo = put_quotes(expo);
 	i = -1;
@@ -73,7 +73,7 @@ void	export_without_args(cmd_tree *cmd)
 	free(expo);
 }
 
-int	export_err(cmd_tree *cmd, char *str, int i)
+int	export_err(cmd_tree *cmd, char *str, int i, env_var *environ)
 {
 	if (str[0] == '-' && str[1] && i == 1)
 	{
@@ -89,9 +89,9 @@ int	export_err(cmd_tree *cmd, char *str, int i)
 		return (1);
 	}
 	if (!ft_strcmp("PWD", cmd->exec.cmd_split[i])
-		&& !find_var(cmd->env, cmd->exec.cmd_split[i]))
+		&& !find_var(environ->env, cmd->exec.cmd_split[i]))
 	{
-		add_env(cmd, "PWD=");
+		add_env(environ, "PWD=");
 		return (1);
 	}
 	return (2);

@@ -6,13 +6,13 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:11:27 by jkroger           #+#    #+#             */
-/*   Updated: 2025/04/26 12:56:37 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/12 11:25:55 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_tokens	*lexer(t_tokens *token_lst, char *input, char **envp)
+t_tokens	*lexer(t_tokens *token_lst, char *input, env_var environ)
 {
 	int			i;
 	t_tokens	*token;
@@ -35,18 +35,18 @@ t_tokens	*lexer(t_tokens *token_lst, char *input, char **envp)
 		else if (input[i] == '&' && input[i + 1] == '&') // i++
 			token = init_token(ft_strdup("&&"), &i, TOK_AND);
 		else if (input[i] == '<' && input[i + 1] != '<')
-			token = init_redir(input, &i, TOK_IN, envp);
+			token = init_redir(input, &i, TOK_IN, environ);
 		else if (input[i] == '<' && input[i + 1] == '<')
-			token = init_redir(input, &i, TOK_DOC, envp);
+			token = init_redir(input, &i, TOK_DOC, environ);
 		else if (input[i] == '>' && input[i + 1] != '>')
-			token = init_redir(input, &i, TOK_OUT, envp);
+			token = init_redir(input, &i, TOK_OUT, environ);
 		else if (input[i] == '>' && input[i + 1] == '>')
-			token = init_redir(input, &i, TOK_APP, envp);
+			token = init_redir(input, &i, TOK_APP, environ);
 
 			
 		else if (input[i] != ' ')
 		{
-			token = init_token_word(input, &i, envp); // echo )
+			token = init_token_word(input, &i, environ); // echo )
 		}
 		if (input[i] != ' ')
 			add_token(&token_lst, token);

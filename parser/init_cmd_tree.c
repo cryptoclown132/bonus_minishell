@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:48:59 by jkroger           #+#    #+#             */
-/*   Updated: 2025/07/29 17:09:58 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/12 21:14:13 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,19 @@ void free_cmd_tree(cmd_tree *node)
             free(node->exec.cmd_path);
     }
 
-    free_string_array(node->env);
-    free_string_array(node->var_lst);
+    //handle elsewhere
+    // free_string_array(node->env);
+    // free_string_array(node->var_lst);
 
     free(node);
 }
 
-int	init_cmd_tree(t_tokens **token_lst, cmd_tree **cmd_lst, char **envp) // , char **envp
+int	init_cmd_tree(t_tokens **token_lst, cmd_tree **cmd_lst, env_var environ) // , char **envp
 {
     t_tokens    *curr_token_lst;
     
     curr_token_lst = *token_lst;
-    *cmd_lst = parse_or(&curr_token_lst, envp);    
+    *cmd_lst = parse_or(&curr_token_lst, environ);    
 
     
 	// while (*token_lst != NULL && g_exit_status != 130)

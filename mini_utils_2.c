@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 18:26:12 by jkroger           #+#    #+#             */
-/*   Updated: 2025/07/28 19:34:33 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/12 21:21:08 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,25 +57,25 @@ int	valid_input(char *input)
 	return (1);
 }
 
-void	free_env(cmd_tree *cmd)
+void	free_env(env_var *environ)
 {
 	int	i;
 
 	i = 0;
-	if (cmd && cmd->env)
+	if (environ && environ->env)
 	{
-		while (cmd->env[i])
-			free(cmd->env[i++]);
-		free(cmd->env);
+		while (environ->env[i])
+			free(environ->env[i++]);
+		free(environ->env);
 	}
 	i = 0;
-	if (cmd && cmd->var_lst)
+	if (environ && environ->vars)
 	{
-		while (cmd->var_lst[i])
-			free(cmd->var_lst[i++]);
-		free(cmd->var_lst);
+		while (environ->vars[i])
+			free(environ->vars[i++]);
+		free(environ->vars);
 	}
-	free(cmd);
+	// free(environ);
 }
 
 // void	fd_closing(int *old_fds, int *new_fds,
