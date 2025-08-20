@@ -59,17 +59,15 @@ int exec_cmd(cmd_tree *cmd_lst, bool in_parent, env_var *environ)
 			exit(g_exit_status);
 		if (run_builtin(cmd_lst, environ))
 			handle_builtin(cmd_lst, in_parent, environ);
-		
-
 		if (check_path(environ->env))
-			execve(cmd_lst->exec.cmd_path, cmd_lst->exec.cmd_split, environ->env);
+			execve(cmd_lst->exec.cmd_path, cmd_lst->exec.cmd_split + cmd_lst->exec.idx_path, environ->env);
 		else
-			execve(cmd_lst->exec.cmd_path, cmd_lst->exec.cmd_split, environ->vars);
-		set_exit_status("Error: command not found", 127); // bash: dsf: command not found
-		exit(1);
+			execve(cmd_lst->exec.cmd_path, cmd_lst->exec.cmd_split + cmd_lst->exec.idx_path, environ->vars);
+		set_exit_status("Error: command not found", 127);
+		exit(127);
 	}
-	// parent: wait and return the child's exit code
 	int status;
 	waitpid(pid, &status, 0);
+	g_exit_status = WEXITSTATUS(status);
 	return WEXITSTATUS(status);
 }

@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:56:19 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/13 17:43:50 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/15 14:55:05 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,24 @@ void	add_env_loop(env_var *environ, char **envcp, char *var)
 	int	i;
 
 	i = 0;
+
+	// int k = -1;
+	// while(envcp && envcp[++k] && k < 6)
+	// 	printf("cpenv = %s\n", envcp[k]);
 	while (envcp && envcp[i])
 	{
 		if (!ft_strncmp(envcp[i], var, len_equal(var)))
+		{
+			// printf("varrrrr envcp= %s && var = %s\n", envcp[i], var);
 			environ->env[i] = ft_strdup(var);
+		}
 		else
 			environ->env[i] = ft_strdup(envcp[i]);
 		i++;
 	}
+	// int j = -1;
+	// while(environ->env && environ->env[++j] && j < 6)
+	// 	printf("env = %s\n", environ->env[j]);
 	if (!ft_var(envcp, var))
 		environ->env[i++] = ft_strdup(var);
 	environ->env[i] = NULL;
@@ -61,23 +71,16 @@ void	add_env(env_var *environ, char *var)
 		return ;
 	envcp = environ->env;
 	
-	if (find_var_in_env(environ->vars, var))
-		del_var(environ, var);
-	
+	// if (find_var_in_env(environ->vars, var))
+	// 	del_var(environ, var);
+
 	if (ft_var(envcp, var))
-	{
-		// int z = 0;
-		// while(environ->env[z] && z < 5)
-		// 	printf("xy = %s\n", environ->env[z++]);
 		environ->env = malloc((count_env_len(envcp) + 1) * sizeof(char *));
-		
-	}
 	else
-	{
 		environ->env = malloc((count_env_len(envcp) + 2) * sizeof(char *));
-	}	
 	if (!environ->env)
 		return (set_exit_void("Failed to Malloc", 1));
+
 	add_env_loop(environ, envcp, var);
 	if (envcp)
 	{
@@ -133,9 +136,6 @@ void	builtin_export(cmd_tree *cmd, env_var *environ)
 			if (find_var(environ->vars, cmd->exec.cmd_split[i]))
 			{
 				add_env(environ, find_var(environ->vars, cmd->exec.cmd_split[i]));
-		// 		int z = 0;
-		// while(environ->env[z] && z < 5)
-		// 	printf("xy = %s\n", environ->env[z++]);
 				del_var(environ, cmd->exec.cmd_split[i]);
 			}
 		}

@@ -1,7 +1,6 @@
 
 #include "minishell.h"
 
-
 #include <stdio.h>
 
 // static void print_indent(int depth) {
@@ -85,58 +84,49 @@
 //     }
 // }
 
-
-
-int	minishell(cmd_tree *cmd_lst, env_var *environ)
+int minishell(cmd_tree *cmd_lst, env_var *environ)
 {
-	char	*input;
+	char *input;
 
 	get_signals();
 	// g_exit_status = 0;
 
-    // cmd_lst->env = copy_env(*env);
-
+	// cmd_lst->env = copy_env(*env);
 
 	input = user_input();
 	if (!input)
 	{
-        printf("exit\n");
+		printf("exit\n");
 		g_exit_status = 130;
-		
-        free_env(environ);
+
+		free_env(environ);
 		exit(g_exit_status);
 	}
+	// printf("g exit= %i\n", g_exit_status);
 	cmd_lst = parse(cmd_lst, &input, *environ);
-    
+
 	add_history(input);
 	free(input);
 	if (g_exit_status == 130 || !cmd_lst || cmd_lst->err == -2)
 	{
-        // free_cmd_lst(cmd_lst);
+		// free_cmd_lst(cmd_lst);
 		return (0);
 	}
 
 	// print_cmd_tree(cmd_lst, 5);
 
-
 	// cmd_lst->var_lst = copy_env(*var_lst),
-    execute_node(cmd_lst, true, environ);
-    
-    // print_str_array(cmd_lst->env);
+	execute_node(cmd_lst, true, environ);
 
+	// print_str_array(cmd_lst->env);
 
-    // free_env(*env);
+	// free_env(*env);
 
-    // *env = copy_env(cmd_lst->env);
-    // *var_lst = copy_env(cmd_lst->var_lst);
-
-    
-
-
-
+	// *env = copy_env(cmd_lst->env);
+	// *var_lst = copy_env(cmd_lst->var_lst);
 
 	// run_cmds_loop(cmd_lst);
-	
+
 	// free(env)
 	// *env =  copy_env(cmd_lst->env)
 	// free_cmd_lst(cmd_lst);

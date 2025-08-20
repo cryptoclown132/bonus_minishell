@@ -58,12 +58,12 @@ void	here_doc(char* limiter, int *infile, env_var environ, cmd_tree *cmd_node)
 	*infile = fd[0]; //check if needs to be closed
 }
 
-cmd_tree *parse_redirection(t_tokens **token_lst, env_var environ)
+void	parse_redirection(t_tokens **token_lst, env_var environ, cmd_tree **cmd_node)
 {
-	cmd_tree	*cmd_node;
+	// cmd_tree	*cmd_node;
 	char		*file;
 	
-	cmd_node = parse_command(token_lst, environ);
+	// cmd_node = parse_command(token_lst, environ);
 	while (*token_lst && ((*token_lst)->type == TOK_IN || (*token_lst)->type == TOK_OUT
 	|| (*token_lst)->type == TOK_APP || (*token_lst)->type == TOK_DOC))
     {
@@ -74,15 +74,28 @@ cmd_tree *parse_redirection(t_tokens **token_lst, env_var environ)
 		
 		file = (*token_lst)->token;
 		if ((*token_lst)->type == TOK_IN)
-			cmd_node->infile = input_redir(file, cmd_node->infile, cmd_node);
+			(*cmd_node)->infile = input_redir(file, (*cmd_node)->infile, *cmd_node);
 		else if ((*token_lst)->type == TOK_OUT)
-			cmd_node->outfile = output_redir(file, cmd_node->outfile, cmd_node);
+			(*cmd_node)->outfile = output_redir(file, (*cmd_node)->outfile, *cmd_node);
 		else if ((*token_lst)->type == TOK_DOC)
-			here_doc(file, &cmd_node->infile, environ, cmd_node);
+			here_doc(file, &(*cmd_node)->infile, environ, *cmd_node);
 		else
-			cmd_node->outfile = ft_append(file, cmd_node->outfile, cmd_node);
+			(*cmd_node)->outfile = ft_append(file, (*cmd_node)->outfile, *cmd_node);
 		
 		*token_lst = (*token_lst)->next; // check later
 	}
-	return cmd_node;
+	// return *cmd_node;
+}
+
+cmd_tree	*parse_cmd_sequence(t_tokens **token_lst, env_var environ)
+{
+	cmd_tree	*cmd_node;
+	// char		*file;
+
+	cmd_node = new_node(NODE_EXEC);
+	parse_redirection(token_lst, environ, &cmd_node);
+	parse_command(token_lst, environ, &cmd_node);
+	parse_redirection(token_lst, environ, &cmd_node);
+
+	return (cmd_node);
 }

@@ -36,9 +36,20 @@ char	**get_cmd_split(t_tokens **token_lst)
 	return new_cmd_split;
 }
 
-cmd_tree *parse_command(t_tokens **token_lst, env_var environ)
+// cmd_tree *parse_path(t_tokens **token_lst, env_var environ)
+// {
+// 	cmd_tree	*cmd_node;
+
+	
+
+	
+// 	return cmd_node;
+
+// }
+
+void	parse_command(t_tokens **token_lst, env_var environ, cmd_tree **cmd_node)
 {
-	cmd_tree	*cmd_node;
+	// cmd_tree	*cmd_node;
 	cmd_tree	*child;
 
     if (*token_lst && (*token_lst)->type == TOK_LPAREN) {
@@ -48,22 +59,41 @@ cmd_tree *parse_command(t_tokens **token_lst, env_var environ)
 
 		*token_lst = (*token_lst)->next;
 
-		cmd_node = new_node(NODE_SUBSHELL);
-		cmd_node->subshell.child = child;
-		return cmd_node;
+		*cmd_node = new_node(NODE_SUBSHELL);
+		(*cmd_node)->subshell.child = child;
+		// return cmd_node;
+		return;
 	}
+
 	
-	// printf("type : %i\n", (*token_lst)->type);
-	if ((*token_lst)->type != TOK_WORD && (*token_lst)->type != TOK_EQUAL) {
-		fprintf(stderr, "Parse error: expected word or '('\n");
-		exit(1);
+	// if ((*token_lst)->type != TOK_WORD && (*token_lst)->type != TOK_EQUAL) {
+	// 	fprintf(stderr, "Parse error: expected word or '('\n");
+	// 	exit(1);
+	// }
+
+	// cmd_node = new_node(NODE_EXEC);
+	(*cmd_node)->exec.cmd_split = get_cmd_split(token_lst);
+	
+	// (*cmd_node)->exec.cmd_path = get_cmd_path(environ,
+	// 	(*cmd_node)->exec.cmd_split[0], *cmd_node);
+
+
+	(*cmd_node)->exec.cmd_path = NULL;
+	(*cmd_node)->exec.idx_path = 0;
+	int i = -1;
+	while ((*cmd_node)->exec.cmd_split && (*cmd_node)->exec.cmd_split[++i])
+	{
+		// printf("in loop\n");
+		if (!ft_strchr((*cmd_node)->exec.cmd_split[i], '='))
+		{
+			// printf("in if\n");
+			(*cmd_node)->exec.cmd_path = get_cmd_path(environ,
+				(*cmd_node)->exec.cmd_split[i], *cmd_node);
+			(*cmd_node)->exec.idx_path = i;
+			break;
+		}
 	}
-	cmd_node = new_node(NODE_EXEC);
-	
-	cmd_node->exec.cmd_split = get_cmd_split(token_lst);
-	cmd_node->exec.cmd_path = get_cmd_path(environ,
-		cmd_node->exec.cmd_split[0], cmd_node);	
-	return cmd_node;
+	return;
 }
 
 

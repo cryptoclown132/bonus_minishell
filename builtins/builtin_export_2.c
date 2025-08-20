@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 23:03:13 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/13 17:41:33 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/20 13:52:42 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,16 +136,14 @@ int	var_lst(cmd_tree *cmd_lst, env_var *environ)
 	if (cmd_lst->type != NODE_EXEC || !cmd_lst->exec.cmd_split)
 		return 0;
 	if (ft_strchr(cmd_lst->exec.cmd_split[0], '=')
-		&& ft_isalpha(cmd_lst->exec.cmd_split[0][0]))
+		&& ft_isalpha(cmd_lst->exec.cmd_split[0][0]) && !cmd_lst->exec.cmd_path)
 	{
+
 		i = -1;
 		while (cmd_lst->exec.cmd_split[++i])
 		{
 			if (find_var_in_env(environ->env, cmd_lst->exec.cmd_split[i]))
-			{
-				printf("first if\n");
 				add_env(environ, cmd_lst->exec.cmd_split[i]);
-			}
 			else
 				add_var(cmd_lst->exec.cmd_split[i], environ);
 		}

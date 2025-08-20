@@ -4,21 +4,17 @@
 int	g_exit_status;
 
 
-// Recursive execution
 int execute_node(cmd_tree *cmd_lst, bool in_parent, env_var *environ) {
 	if (!cmd_lst) 
 		return -1;
 
-    // printf("type shit : %i\n", cmd_lst->type);
 
 	if (cmd_lst->type == NODE_EXEC)
     {
-        // printf("in exec nodesdfsgsf\n");
 		return exec_cmd(cmd_lst, in_parent, environ);
     }
 
 	else if (cmd_lst->type == NODE_SUBSHELL){
-		// printf(" if in subshell node!!!!!!!!!!!!!!!!!!!\n");
 
 		return exec_subshell(cmd_lst, environ);
 	}
@@ -31,7 +27,6 @@ int execute_node(cmd_tree *cmd_lst, bool in_parent, env_var *environ) {
 
 	else if (cmd_lst->type == NODE_OR)
     {
-        // printf("in ord node??????????\n");
 	    return exec_or(cmd_lst, environ);
     }
 
@@ -39,26 +34,6 @@ int execute_node(cmd_tree *cmd_lst, bool in_parent, env_var *environ) {
 }
 
 
-
-
-
-
-
-
-
-//lala=123
-//zesty=123 zzzz zaba
-
-// lala=1234353
-// echo $lala
-// 1234353
-
-//export lala=123
-//lala=456
-//env | grep lala
-
-//export lal
-//shell: Failed to Malloc
 
 int main(int argc, char *argv[], char **envp)
 {

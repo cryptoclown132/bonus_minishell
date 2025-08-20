@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 14:34:39 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/13 17:44:26 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/20 13:48:11 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct cmd_tree {
 		struct {
 			char    **cmd_split;
 			char    *cmd_path;
+			int		idx_path;
 		} exec;
 
 		struct {
@@ -328,7 +329,10 @@ void	free_string_array(char **arr);
 int	init_cmd_tree(t_tokens **token_lst, cmd_tree **cmd_lst, env_var environ);
 
 /* parse_cmd.c */
-cmd_tree *parse_command(t_tokens **token_lst, env_var environ);
+// cmd_tree *parse_command(t_tokens **token_lst, env_var environ);
+// cmd_tree *parse_command(t_tokens **token_lst, env_var environ, cmd_tree **cmd_node);
+void	parse_command(t_tokens **token_lst, env_var environ, cmd_tree **cmd_node);
+
 
 /* heredoc_utils.c */
 // void	here_doc_loop(char	*limiter, int fd, char **env);
@@ -355,7 +359,9 @@ char	**copy_env(char **envp);
 
 
 /* parse_redir.c */
-cmd_tree *parse_redirection(t_tokens **token_lst, env_var environ);
+// cmd_tree *parse_redirection(t_tokens **token_lst, env_var environ);
+void	parse_redirection(t_tokens **token_lst, env_var environ, cmd_tree **cmd_node);
+cmd_tree	*parse_cmd_sequence(t_tokens **token_lst, env_var environ);
 
 /* signals.c */
 void	get_signals(void);
