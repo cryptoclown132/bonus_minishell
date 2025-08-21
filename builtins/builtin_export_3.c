@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 17:12:06 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/15 14:52:29 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/21 13:38:54 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	len_equal(char *var)
 		if (var[i] == '=')
 			return (i);
 	}
-	return (i); // return 0
+	return (i);
 }
 
 char	**put_quotes(char **expo)

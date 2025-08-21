@@ -6,24 +6,28 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 12:56:02 by jkroger           #+#    #+#             */
-/*   Updated: 2025/07/29 17:07:53 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/21 12:49:27 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void disable_echo() {
-    struct termios term;
-    tcgetattr(STDIN_FILENO, &term);
-    term.c_lflag &= ~ECHO;
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+void	disable_echo(void)
+{
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~ECHO;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-void enable_echo() {
-    struct termios term;
-    tcgetattr(STDIN_FILENO, &term);
-    term.c_lflag |= ECHO;
-    tcsetattr(STDIN_FILENO, TCSANOW, &term);
+void	enable_echo(void)
+{
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag |= ECHO;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
 void	ctrl_c(int status)

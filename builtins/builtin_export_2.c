@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 23:03:13 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/20 13:52:42 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/21 11:52:17 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,11 @@ int	strnstr_equal(const char *haystack, const char *needle)
 	while (i < ft_strlen(haystack))
 	{
 		if (haystack[i] == needle[i] && needle[i] == '=')
-			return 1;
+			return (1);
 		else if (haystack[i] == needle[i])
 			i++;
 		else
-			return 0;
+			return (0);
 	}
 	return (0);
 }
@@ -134,11 +134,10 @@ int	var_lst(cmd_tree *cmd_lst, env_var *environ)
 	int	i;
 
 	if (cmd_lst->type != NODE_EXEC || !cmd_lst->exec.cmd_split)
-		return 0;
+		return (0);
 	if (ft_strchr(cmd_lst->exec.cmd_split[0], '=')
 		&& ft_isalpha(cmd_lst->exec.cmd_split[0][0]) && !cmd_lst->exec.cmd_path)
 	{
-
 		i = -1;
 		while (cmd_lst->exec.cmd_split[++i])
 		{
@@ -147,7 +146,7 @@ int	var_lst(cmd_tree *cmd_lst, env_var *environ)
 			else
 				add_var(cmd_lst->exec.cmd_split[i], environ);
 		}
-		return 1;
+		return (1);
 	}
-	return 0;
+	return (0);
 }

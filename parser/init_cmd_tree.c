@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:48:59 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/12 21:14:13 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/21 21:07:05 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,72 +14,72 @@
 
 void	free_string_array(char **arr)
 {
-    int	i;
+	int	i;
 
-	if (!arr) 
-		return;
+	if (!arr)
+		return ;
 	i = -1;
 	while (arr[++i])
 		free(arr[i]);
 	free(arr);
 }
 
-
 void	close_file(cmd_tree *node)
 {
-	if (node->infile  >  0) 
+	if (node->infile > 0) 
 		close(node->infile);
-	if (node->outfile >  1)
+	if (node->outfile > 1)
 		close(node->outfile);
 	if (node->err_file)
 		free(node->err_file);
 }
 
-void free_cmd_tree(cmd_tree *node)
+void	free_cmd_tree(cmd_tree *node)
 {
-    if (!node)
-        return;
-
-    switch (node->type) {
-        case NODE_PIPE:
-            free_cmd_tree(node->pipe.left);
-            free_cmd_tree(node->pipe.right);
-            break;
-        case NODE_AND:
-            free_cmd_tree(node->and.left);
-            free_cmd_tree(node->and.right);
-            break;
-        case NODE_OR:
-            free_cmd_tree(node->or.left);
-            free_cmd_tree(node->or.right);
-            break;
-        case NODE_SUBSHELL:
-            free_cmd_tree(node->subshell.child);
-            break;
-        case NODE_EXEC:
-            break;
-    }
+	if (!node)
+		return;
+	switch (node->type)
+	{
+		case NODE_PIPE:
+			free_cmd_tree(node->pipe.left);
+			free_cmd_tree(node->pipe.right);
+			break;
+		case NODE_AND:
+			free_cmd_tree(node->and.left);
+			free_cmd_tree(node->and.right);
+			break;
+		case NODE_OR:
+			free_cmd_tree(node->or.left);
+			free_cmd_tree(node->or.right);
+			break;
+		case NODE_SUBSHELL:
+			free_cmd_tree(node->subshell.child);
+			break;
+		case NODE_EXEC:
+			break;
+	}
 
 	close_file(node);
-    if (node->type == NODE_EXEC) {
-        free_string_array(node->exec.cmd_split);
-        if (node->exec.cmd_path)
-            free(node->exec.cmd_path);
-    }
+	if (node->type == NODE_EXEC)
+	{
+		free_string_array(node->exec.cmd_split);
+		if (node->exec.cmd_path)
+			free(node->exec.cmd_path);
+	}
 
     //handle elsewhere
     // free_string_array(node->env);
     // free_string_array(node->var_lst);
 
-    free(node);
+	free(node);
 }
 
 int	init_cmd_tree(t_tokens **token_lst, cmd_tree **cmd_lst, env_var environ) // , char **envp
 {
-    t_tokens    *curr_token_lst;
-    
-    curr_token_lst = *token_lst;
-    *cmd_lst = parse_or(&curr_token_lst, environ);    
+	t_tokens	*curr_token_lst;
+
+	curr_token_lst = *token_lst;
+	*cmd_lst = parse_or(&curr_token_lst, environ);
 
     
 	// while (*token_lst != NULL && g_exit_status != 130)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/06 14:46:37 by jkroger           #+#    #+#             */
-/*   Updated: 2022/06/08 14:16:23 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/21 12:05:58 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	ft_end(char const *s1, char const *set)
 }
 
 char	*ft_strtrim(char const *s1, char const *set)
-{	
+{
 	char	*p;
 	size_t	i;
 	size_t	l;

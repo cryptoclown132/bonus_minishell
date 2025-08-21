@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:16:41 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/15 13:51:21 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/21 21:06:29 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,25 @@
 char	*path_finder_2(char **env)
 {
 	int	i;
-	
+
 	i = -1;
 	while (env && env[++i])
 	{
 		if (ft_strnstr(env[i], "PATH=", 5))
-		return (ft_substr(env[i], 5, ft_strlen(env[i]) - 5));
+			return (ft_substr(env[i], 5, ft_strlen(env[i]) - 5));
 	}
 	return (NULL);
 }
 
 char	*path_finder(env_var environ)
 {
-	char *envp;
+	char	*envp;
 
 	envp = path_finder_2(environ.env);
 	if (!envp)
 		envp = path_finder_2(environ.vars);
 	return (envp);
 }
-
 
 char	*get_cmd_path2(char *envp, char *cmd)
 {

@@ -52,7 +52,7 @@ char	*itw_loop(char *input, char *tkn, int *j, env_var environ)
 	}
 	if (t.tmp != '\'')
 		t.tmp_str = expander(t.tmp_str, environ);
-	tkn = free_both_strjoin(tkn, t.tmp_str);	
+	tkn = free_both_strjoin(tkn, t.tmp_str);
 	*j = t.k + 1;
 	return (tkn);
 }
@@ -76,7 +76,6 @@ t_tokens	*init_token_word(char *input, int *i, env_var environ)
 	token = init_token(tkn, i, TOK_WORD);
 	if (ft_strchr(tkn, '=') && valid_input(tkn))
 		token->type = TOK_EQUAL;
-	
 	return (token);
 }
 

@@ -46,7 +46,7 @@ int	ft_unsigned_decimal(unsigned int u)
 	n = (long)u;
 	output = 0;
 	if (n < 10)
-	{	
+	{
 		n = n % 10;
 		output += write(1, &"0123456789"[n], 1);
 	}

@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 19:40:38 by fjerinic          #+#    #+#             */
-/*   Updated: 2025/08/12 19:44:06 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/21 21:03:36 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ int	exit_util(cmd_tree *cmd_lst)
 {
 	if (!ft_strncmp(cmd_lst->exec.cmd_split[0], "exit", 5))
 	{
-		// if (cmd_lst->next)
-		// 	return (1);
 		builtin_exit(cmd_lst);
 		return (1);
 	}
@@ -28,8 +26,6 @@ int	unset_util(cmd_tree *cmd_lst, env_var *environ)
 {
 	if (!ft_strncmp(cmd_lst->exec.cmd_split[0], "unset", 6))
 	{
-		// if (cmd_lst->next)
-		// 	return (1);
 		unset(cmd_lst, environ);
 		return (1);
 	}
@@ -47,15 +43,9 @@ void	try_env(cmd_tree *cmd_lst, env_var *environ)
 	return ;
 }
 
-int	run_builtin(cmd_tree *cmd_lst, env_var *environ)   //change the return value
+int	run_builtin(cmd_tree *cmd_lst, env_var *environ)
 {
 	get_signals_child();
-	// if (!check_builtin(cmd_lst->exec.cmd_split[0]) && cmd_lst->err != 0)
-	// {
-	// 	set_err(cmd_lst->err_file, cmd_lst->err);
-	// 	return (1);
-	// }
-
 	if (!is_builtin(cmd_lst->exec.cmd_split[0]) && cmd_lst->err != 0)
 	{
 		set_err(cmd_lst->err_file, cmd_lst->err);
@@ -63,20 +53,13 @@ int	run_builtin(cmd_tree *cmd_lst, env_var *environ)   //change the return value
 	}
 	if (!ft_strncmp(cmd_lst->exec.cmd_split[0], "cd", 3))
 	{
-		// if (cmd_lst->next && cmd_lst->log_op != AND && cmd_lst->log_op != OR)
-		// 	return (1);
 		cd(cmd_lst, environ);
-		// return (0); // changes here
-		return 1;
+		return (1);
 	}
 	else if (!ft_strncmp(cmd_lst->exec.cmd_split[0], "export", 7))
 	{
-		// if (cmd_lst->next && cmd_lst->log_op != AND && cmd_lst->log_op != OR)
-		// 	return (1);
 		builtin_export(cmd_lst, environ);
-		// return (0); // changes here
-
-		return 1;
+		return (1);
 	}
 	else if (unset_util(cmd_lst, environ))
 		return (1);
@@ -131,16 +114,3 @@ int	is_builtin(char *cmd)
 		return (0);
 	return (1);
 }
-
-// int	is_change_builtin(char *cmd)
-// {
-// 	if (ft_strcmp(cmd, "cd") == 0)
-// 		return (0);
-// 	else if (ft_strcmp(cmd, "export") == 0)
-// 		return (0);
-// 	else if (ft_strcmp(cmd, "unset") == 0)
-// 		return (0);
-// 	else if (ft_strcmp(cmd, "exit") == 0)
-// 		return (0);
-// 	return (1);
-// }

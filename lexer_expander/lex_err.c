@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_err.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 17:45:26 by jkroger           #+#    #+#             */
-/*   Updated: 2023/03/12 00:34:30 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/21 12:02:14 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ int	check_or(char *input, int i)
 	if (input[i] == '|' || input[i] == '&' || input[i] == ')')
 	{
 		if (input[i] == '&')
-			lex_error( input[i + 1] == '&' ? "&&" : "&");
+			lex_error(input[i + 1] == '&' ? "&&" : "&");
 		else if (input[i] == ')')
 			lex_error(")");
 		else
-			lex_error(((input[i - 1] == '|' &&  input[i]) || (input[i] && input[i + 1] == '|')) ? "||" : "|");
+			lex_error(((input[i - 1] == '|' && input[i]) || (input[i] && input[i + 1] == '|')) ? "||" : "|");
 		return (-1);
 	}
 	return (i);
@@ -99,7 +99,7 @@ int	check_log_op_2(char *input, int i)
 		if (input[i] == '\'' || input[i] == '"')
 			quote_len(input, &i);
 		if (input[i] == '|')
-			i = check_or(input, i); //if i 0
+			i = check_or(input, i);
 		else if (input[i] == '&')
 			i = check_and(input, i);
 		if (i == -1)
@@ -181,6 +181,31 @@ int	check_unclosed_parenthesis(char *input)
 	return (1);
 }
 
+int	check_correct_parenthesis(char *input)
+{
+	int	i;
+
+	i = -1;
+	while (input[++i])
+	{
+		if (input[i] != ' ' && input[i] != '(')
+		{
+			if (input[i] == '\"' || input[i] == '\'')
+				quote_len(input, &i);
+			while (input[i] && input[i] != '|' && input[i] != '&'
+				&& input[i] != '<' && input[i] != '>'
+				&& input[i] != '(' && input[i] != ')')
+				i++;
+			if (input[i] == '(')
+			{
+				lex_error("(");
+				return (0);
+			}
+		}
+	}
+	return (1);
+}
+
 int	lex_error_check(char *input)
 {
 	if (!check_spaces(input))
@@ -188,6 +213,8 @@ int	lex_error_check(char *input)
 	else if (!check_unclosed_quotes(input))
 		return (0);
 	else if (!check_unclosed_parenthesis(input))
+		return (0);
+	else if (!check_correct_parenthesis(input))
 		return (0);
 	else if (!check_redir(input))
 		return (0);

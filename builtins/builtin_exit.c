@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 11:10:15 by raweber           #+#    #+#             */
-/*   Updated: 2025/04/25 17:16:15 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/21 11:48:38 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	check_numeric(char *arg)
 void	builtin_exit(cmd_tree *cmd_struct)
 {
 	ft_printf("exit\n");
-	if (cmd_struct->exec.cmd_split[1] && !check_numeric(cmd_struct->exec.cmd_split[1]))
+	if (cmd_struct->exec.cmd_split[1]
+		&& !check_numeric(cmd_struct->exec.cmd_split[1]))
 	{
 		ft_putstr_fd("shell: exit: numeric argument required\n", 2);
 		g_exit_status = 255;

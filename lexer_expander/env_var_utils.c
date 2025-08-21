@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 20:51:29 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/12 22:20:29 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/21 13:20:13 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*var_finder_2(char **env, char *var)
 {
 	int	j;
 	int	i;
-	
+
 	i = -1;
 	while (env && env[++i])
 	{
@@ -26,7 +26,7 @@ char	*var_finder_2(char **env, char *var)
 			return (ft_substr(env[i], j, ft_strlen(env[i]) - j + 1));
 		}
 	}
-	return NULL;
+	return (NULL);
 }
 
 char	*var_finder(env_var environ, char *var)
@@ -35,7 +35,7 @@ char	*var_finder(env_var environ, char *var)
 
 	var = edited_strjoin(var, "=");
 	if (!var)
-		return (set_exit_status("Failed to Malloc", 1));	
+		return (set_exit_status("Failed to Malloc", 1));
 	var_found = var_finder_2(environ.env, var);
 	if (!var_found)
 		var_found = var_finder_2(environ.vars, var);
@@ -49,9 +49,9 @@ void	var_exist(char *token, env_var environ, int *i, char **var_value)
 
 	j = *i + 1;
 	while ((token[j] >= 'a' && token[j] <= 'z')
-	|| (token[j] >= 'A' && token[j] <= 'Z')
-	|| (token[j] >= '0' && token[j] <= '9')
-	|| token[j] == '_' || token[j] == '/')
+		|| (token[j] >= 'A' && token[j] <= 'Z')
+		|| (token[j] >= '0' && token[j] <= '9')
+		|| token[j] == '_' || token[j] == '/')
 		j++;
 	if (token[*i] == '$' && token[*i + 1] == '?')
 	{
@@ -60,9 +60,7 @@ void	var_exist(char *token, env_var environ, int *i, char **var_value)
 	}
 	else
 		*var_value = var_finder(environ, ft_substr(token, *i + 1, j - *i - 1));
-	// *i = j - 1;
 	*i = j;
-	// return *var_value;
 }
 
 int	get_len(char *token, env_var environ)
@@ -91,10 +89,9 @@ void	concat_var(char *token, env_var environ, char **var_value, int *i, int *j)
 {
 	char	*tmp;
 	int		k;
-	
+
 	tmp = NULL;
 	var_exist(token, environ, i, &tmp);
-	
 	k = 0;
 	if (tmp)
 	{
@@ -109,7 +106,7 @@ char	*get_var(char *token, env_var environ)
 	char	*var_value;
 	int		i;
 	int		j;
-	
+
 	var_value = malloc((get_len(token, environ) + 1) * sizeof(char));
 	if (!var_value)
 		return (set_exit_status("Failed to Malloc", 1));

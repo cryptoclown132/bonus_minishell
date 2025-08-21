@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 19:48:05 by fjerinic          #+#    #+#             */
-/*   Updated: 2025/04/25 17:42:31 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/21 11:37:43 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,12 @@ static void	echo_n(cmd_tree *cmd_struct)
 }
 
 void	echo(cmd_tree *cmd_struct)
-{	
+{
 	if (echo_check_args(cmd_struct))
 		return ;
 	if (cmd_struct->exec.cmd_split[1]
 		&& !ft_strncmp(cmd_struct->exec.cmd_split[1], "-n", 3))
-	{
 		echo_no_n(cmd_struct);
-	}
 	else
-	{
 		echo_n(cmd_struct);
-	}
 }

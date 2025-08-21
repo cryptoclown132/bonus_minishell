@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 14:38:59 by jkroger           #+#    #+#             */
-/*   Updated: 2025/07/24 16:28:48 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/21 21:25:13 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,6 @@ char	*user_input(void)
 
 	prompt = "shell$> ";
 	input = readline(prompt);
-
-	// if (ft_strlen(input))
-	// 	add_history(input);//later in code
 	return (input);
 }
 
@@ -45,59 +42,3 @@ int	ft_strcmp(const char *s1, const char *s2)
 	}
 	return (0);
 }
-
-// int	check_builtin(char *cmd)
-// {
-// 	if (ft_strcmp(cmd, "echo") == 0)
-// 		return (0);
-// 	else if (ft_strcmp(cmd, "cd") == 0)
-// 		return (0);
-// 	else if (ft_strcmp(cmd, "pwd") == 0)
-// 		return (0);
-// 	else if (ft_strcmp(cmd, "export") == 0)
-// 		return (0);
-// 	else if (ft_strcmp(cmd, "unset") == 0)
-// 		return (0);
-// 	else if (ft_strcmp(cmd, "env") == 0)
-// 		return (0);
-// 	else if (ft_strcmp(cmd, "exit") == 0)
-// 		return (0);
-// 	return (1);
-// }
-
-// void	free_token(t_tokens **token)
-// {
-// 	t_tokens	*tmp;
-
-// 	while (*token != NULL)
-// 	{
-// 		tmp = (*token)->next;
-// 		free((*token)->token);
-// 		free(*token);
-// 		*token = tmp;
-// 	}
-// 	*token = NULL;
-// }
-
-// t_cmds	*cmd_struct(char **envp, int prev)
-// {
-// 	t_cmds	*cmd;
-
-// 	cmd = malloc(sizeof(t_cmds));
-// 	if (!cmd)
-// 		return (set_exit_status("Failed to Malloc", 1));
-// 	cmd->env = copy_env(envp);
-// 	cmd->infile = 0;
-// 	cmd->outfile = 1;
-// 	cmd->err = 0;
-// 	cmd->prev = prev;
-// 	cmd->err_file = NULL;
-// 	cmd->cmd_split = NULL;
-// 	cmd->var_lst = NULL;
-// 	if (prev == 0)
-// 		cmd->next = NULL;
-
-
-// 	cmd->log_op = -1;
-// 	return (cmd);
-// }
