@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 14:34:39 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/20 13:48:11 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/22 22:16:03 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,14 +130,14 @@ typedef struct s_tokens
 
 /* for norm */
 
-// typedef struct s_get_var
-// {
-// 	int		i;
-// 	int		j;
-// 	int		k;
-// 	char	*var_value;
-// 	char	*tmp;
-// }t_get_var;
+typedef struct s_get_var
+{
+	int		i;
+	int		j;
+	// int		k;
+	// char	*var_value;
+	// char	*tmp;
+}t_get_var;
 
 typedef struct s_expan
 {
@@ -151,6 +151,7 @@ typedef struct s_itw_loop
 	char	tmp;
 	int		k;
 }t_itw_loop;
+
 
 // typedef struct s_here_loop
 // {
@@ -214,7 +215,9 @@ void		env(env_var *environ);
 // builtin_unset.c
 void		unset(cmd_tree *cmd_lst, env_var *environ);
 // int				valid_input_helper_unset(char *cur_cmd, int n);
-int			valid_input_helper(char *cur_cmd, int n);
+// int			valid_input_helper(char *cur_cmd, int n);
+/* builtin_unset_2.c */
+int	get_char_index(const char *s, int c);
 
 // builtin_exit.c
 void		builtin_exit(cmd_tree *cmd_lst);
@@ -297,13 +300,15 @@ char	*expander(char *token, env_var environ);
 /* env_var_utils.c */
 char	*var_finder(env_var environ, char *var);
 void	var_exist(char *token, env_var environ, int *i, char **var_value);
+void	cat_var(char *token, env_var environ, char **var_value, t_get_var *v);
 
 // char	*var_exist(char *token, char **envp, int *i, char **var_value);
 int	get_len(char *token, env_var environ);
 // char	*get_var(char *token, char **envp);
 char	*get_var(char *token, env_var environ);
 
-
+/* wildcard.c */
+char  *wildcard(char *str);
 
 /**********/
 /* parser */

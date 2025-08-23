@@ -6,23 +6,11 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 00:59:06 by fjerinic          #+#    #+#             */
-/*   Updated: 2025/08/21 13:40:48 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/22 14:28:30 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	get_char_index(const char *s, int c)
-{
-	int		n;
-
-	if (!s)
-		return (0);
-	n = 0;
-	while (s[n] != 0 && s[n] != (char)c)
-		n++;
-	return (n);
-}
 
 int	valid_input_helper_unset(char *cur_cmd, int n)
 {
@@ -64,7 +52,7 @@ int	check_valid_unset_variable(char *cur_cmd)
 	char_index = get_char_index(cur_cmd, '=');
 	while (cur_cmd[n] && n < char_index)
 	{
-		if (!valid_input_helper(cur_cmd, n++))
+		if (!valid_input_helper_unset(cur_cmd, n++))
 			return (0);
 	}
 	return (1);

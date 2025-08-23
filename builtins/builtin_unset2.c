@@ -3,35 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 20:37:34 by jkroger           #+#    #+#             */
-/*   Updated: 2023/03/20 22:10:12 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/22 14:27:02 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	valid_input_helper(char *cur_cmd, int n)
+int	get_char_index(const char *s, int c)
 {
-	if (!n)
-	{
-		if (!ft_isalpha(cur_cmd[n]) && !ft_strchr(cur_cmd, '_')
-			&& !ft_strchr(cur_cmd, '\"') && !ft_strchr(cur_cmd, '\''))
-		{
-			set_exit_status("Error", 1);
-			return (0);
-		}
-		return (1);
-	}
-	else
-	{
-		if (!ft_isalnum(cur_cmd[n]) && !ft_strchr(cur_cmd, '_')
-			&& !ft_strchr(cur_cmd, '\"') && !ft_strchr(cur_cmd, '\''))
-		{
-			set_exit_status("Error", 1);
-			return (0);
-		}
-		return (1);
-	}
+	int		n;
+
+	if (!s)
+		return (0);
+	n = 0;
+	while (s[n] != 0 && s[n] != (char)c)
+		n++;
+	return (n);
 }

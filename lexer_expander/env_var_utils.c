@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 20:51:29 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/21 13:20:13 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/22 14:49:55 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,40 +85,18 @@ int	get_len(char *token, env_var environ)
 	return (var_len);
 }
 
-void	concat_var(char *token, env_var environ, char **var_value, int *i, int *j)
+void	cat_var(char *token, env_var environ, char **var_value, t_get_var *v)
 {
 	char	*tmp;
 	int		k;
 
 	tmp = NULL;
-	var_exist(token, environ, i, &tmp);
+	var_exist(token, environ, &v->i, &tmp);
 	k = 0;
 	if (tmp)
 	{
 		while (tmp && tmp[k])
-			(*var_value)[(*j)++] = tmp[k++];
+			(*var_value)[((*v).j)++] = tmp[k++];
 		free(tmp);
 	}
-}
-
-char	*get_var(char *token, env_var environ)
-{
-	char	*var_value;
-	int		i;
-	int		j;
-
-	var_value = malloc((get_len(token, environ) + 1) * sizeof(char));
-	if (!var_value)
-		return (set_exit_status("Failed to Malloc", 1));
-	i = 0;
-	j = 0;
-	while (token[i])
-	{
-		if (token[i] == '$' && token[i + 1] != '$')
-			concat_var(token, environ, &var_value, &i, &j);
-		else
-			var_value[j++] = token[i++];
-	}
-	var_value[j] = '\0';
-	return (var_value);
 }

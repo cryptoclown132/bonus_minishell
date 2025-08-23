@@ -6,11 +6,32 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:01:04 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/21 11:58:14 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/22 14:50:06 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*get_var(char *token, env_var environ)
+{
+	char		*var_value;
+	t_get_var	v;
+
+	var_value = malloc((get_len(token, environ) + 1) * sizeof(char));
+	if (!var_value)
+		return (set_exit_status("Failed to Malloc", 1));
+	v.i = 0;
+	v.j = 0;
+	while (token[v.i])
+	{
+		if (token[v.i] == '$' && token[v.i + 1] != '$')
+			cat_var(token, environ, &var_value, &v);
+		else
+			var_value[v.j++] = token[v.i++];
+	}
+	var_value[v.j] = '\0';
+	return (var_value);
+}
 
 char	*expander(char *token, env_var environ)
 {
