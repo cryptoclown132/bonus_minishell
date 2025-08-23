@@ -50,10 +50,10 @@ char	*itw_loop(char *input, char *tkn, int *j, char **envp)
 		t.tmp_str = ft_substr(input, *j, t.k - *j);
 		t.k--;
 	}
+	if (t.tmp != '\'')
+  t.tmp_str = expander(t.tmp_str, envp);
   if (t.tmp != '\'' && t.tmp != '"')
     t.tmp_str = wildcard(t.tmp_str);
-	if (t.tmp != '\'')
-		t.tmp_str = expander(t.tmp_str, envp);
 	tkn = free_both_strjoin(tkn, t.tmp_str);	
 	*j = t.k + 1;
 	return (tkn);
