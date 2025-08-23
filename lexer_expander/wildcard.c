@@ -47,13 +47,14 @@ char  *wildcard(char *str)
   ssize_t idx = 0;
   while (next_dir)
   {
-    if (next_dir->d_name[0] != '.')
+    if (str[0] == '.' || next_dir->d_name[0] != '.')
     {
       ft_strlcpy(paths[idx], next_dir->d_name, PATH_SIZE);
       idx++;
     }
     next_dir = readdir(curr_dir);
   }
+  closedir(curr_dir);
 
   // Special case: str == "*"
   if (!ft_strncmp(str, "*", ft_strlen(str)))
