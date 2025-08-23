@@ -29,6 +29,34 @@ ssize_t dir_count_entries(char *dir_name)
   return (count);
 }
 
+char  *concat_all_paths()
+{
+  char  *tmp;
+  char  *ret;
+  const DIR   *dirp = opendir(".");
+  struct dirent *next_dir;
+
+  ret = calloc(2, 1);
+  while ((next_dir = readdir((DIR *)dirp)))
+  {
+    if (next_dir->d_name[0] != '.')
+    {
+      tmp = ret;
+      ret = ft_strjoin(ret, next_dir->d_name);
+      free(tmp);
+      tmp = ret;
+      ret = ft_strjoin(ret, " ");
+      free(tmp);
+    }
+  }
+  if (ft_strlen(ret))
+    ret[ft_strlen(ret) - 1] = '\0';
+  closedir((DIR *)dirp);
+  if (dir_count_entries(".") == 2)
+    ret[0] = '*';
+  return (ret);
+}
+
 char  *wildcard(char *str)
 {
   // Count entries in curr dic
@@ -59,22 +87,23 @@ char  *wildcard(char *str)
   // Special case: str == "*"
   if (!ft_strncmp(str, "*", ft_strlen(str)))
   {
-    char  *tmp;
-    char  *ret = calloc(1, 1);
+    return (concat_all_paths());
+    // char  *tmp;
+    // char  *ret = calloc(1, 1);
 
-    for (ssize_t i = 0; i < entry_count; i++)
-    {
-      if (i != 0)
-      {
-        tmp = ret;
-        ret = ft_strjoin(ret, " ");
-        free(tmp);
-      }
-      tmp = ret;
-      ret = ft_strjoin(ret, paths[i]);
-      free(tmp);
-    }
-    return (ret);
+    // for (ssize_t i = 0; i < entry_count; i++)
+    // {
+    //   if (i != 0)
+    //   {
+    //     tmp = ret;
+    //     ret = ft_strjoin(ret, " ");
+    //     free(tmp);
+    //   }
+    //   tmp = ret;
+    //   ret = ft_strjoin(ret, paths[i]);
+    //   free(tmp);
+    // }
+    // return (ret);
   }
 
   // Split the string at every '*'
