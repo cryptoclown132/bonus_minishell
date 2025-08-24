@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_pipe.c                                       :+:      :+:    :+:   */
+/*   lex_err_red_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/24 13:39:19 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/24 13:39:21 by julienkroge      ###   ########.fr       */
+/*   Created: 2025/08/24 12:48:24 by julienkroge       #+#    #+#             */
+/*   Updated: 2025/08/24 12:48:32 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-cmd_tree	*parse_pipeline(t_tokens **token_lst, env_var environ)
+int	skip_rs_in(char *input, int i)
 {
-	cmd_tree	*left;
-	cmd_tree	*right;
-	cmd_tree	*n;
+	if (input[i] == '<')
+		i++;
+	while (input[i] == ' ')
+		i++;
+	return (i);
+}
 
-	left = parse_cmd_sequence(token_lst, environ);
-	while (*token_lst && (*token_lst)->type == TOK_PIPE)
-	{
-		*token_lst = (*token_lst)->next;
-		right = parse_cmd_sequence(token_lst, environ);
-		n = new_node(NODE_PIPE);
-		n->pipe.left = left;
-		n->pipe.right = right;
-		left = n;
-	}
-	return (left);
+int	skip_rs_out(char *input, int i)
+{
+	if (input[i] == '>')
+		i++;
+	while (input[i] == ' ')
+		i++;
+	return (i);
 }

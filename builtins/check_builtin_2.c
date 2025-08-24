@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_pipe.c                                       :+:      :+:    :+:   */
+/*   check_builtin_2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/24 13:39:19 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/24 13:39:21 by julienkroge      ###   ########.fr       */
+/*   Created: 2025/08/24 12:41:48 by julienkroge       #+#    #+#             */
+/*   Updated: 2025/08/24 12:42:04 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-cmd_tree	*parse_pipeline(t_tokens **token_lst, env_var environ)
+int	is_builtin(char *cmd)
 {
-	cmd_tree	*left;
-	cmd_tree	*right;
-	cmd_tree	*n;
-
-	left = parse_cmd_sequence(token_lst, environ);
-	while (*token_lst && (*token_lst)->type == TOK_PIPE)
-	{
-		*token_lst = (*token_lst)->next;
-		right = parse_cmd_sequence(token_lst, environ);
-		n = new_node(NODE_PIPE);
-		n->pipe.left = left;
-		n->pipe.right = right;
-		left = n;
-	}
-	return (left);
+	if (ft_strcmp(cmd, "echo") == 0)
+		return (0);
+	else if (ft_strcmp(cmd, "cd") == 0)
+		return (0);
+	else if (ft_strcmp(cmd, "pwd") == 0)
+		return (0);
+	else if (ft_strcmp(cmd, "export") == 0)
+		return (0);
+	else if (ft_strcmp(cmd, "unset") == 0)
+		return (0);
+	else if (ft_strcmp(cmd, "env") == 0)
+		return (0);
+	else if (ft_strcmp(cmd, "exit") == 0)
+		return (0);
+	return (1);
 }

@@ -1,7 +1,7 @@
 
 #include "../minishell.h"
 
-cmd_tree *new_node(node_type t)
+cmd_tree	*new_node(node_type t)
 {
 	cmd_tree *n;
 
@@ -95,6 +95,50 @@ void print_tokens(t_tokens *head)
 	}
 }
 
+// char *expand_wildcar(char *input)
+// {
+
+// }
+
+// char	*check_wildcard(char *input)
+// {
+// 	int		i;
+// 	char	quote;
+
+// 	i = -1;
+// 	while (input[++i])
+// 	{
+// 		if (input[i] == '\'' || input[i] == '\"')
+// 		{
+// 			quote = input[i++];
+// 			while (input[i] && quote == '\'' && quote == '\"')
+// 				i++;
+// 		}
+// 		if (input[i] == '<' && input[i + 1] == '<')
+// 		{
+// 			while (input[i] && input[i] != ' ' && input[i] != '|'
+// 				&& input[i] != '<' && input[i] != '>' && input[i] != '&')
+// 			{
+// 				if (input[i] == '\'' || input[i] == '\"')
+// 				{
+// 					quote = input[i++];
+// 					while (input[i] && quote == '\'' && quote == '\"')
+// 						i++;
+// 				}
+// 				i++;
+// 			}
+// 			if (input[i] == '<' && input[i + 1] == '<')
+// 			{
+// 				i--;
+// 				continue;
+// 			}
+// 		}
+// 		if (input[i] == '*')
+// 			return (1);
+// 	}
+// 	return (0);
+// }
+
 cmd_tree	*parse(cmd_tree *cmd_lst, char **input, env_var environ)
 {
 	t_tokens	*token_lst;
@@ -118,6 +162,7 @@ cmd_tree	*parse(cmd_tree *cmd_lst, char **input, env_var environ)
 
 		//handle error free etc.
 	g_exit_status = prev_exit_status;
+
 	token_lst = lexer(token_lst, *input, environ);	
 	g_exit_status = 0;
 	if (init_cmd_tree(&token_lst, &cmd_lst, environ) != 1)//, envp

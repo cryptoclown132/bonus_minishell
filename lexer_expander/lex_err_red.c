@@ -6,28 +6,29 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 18:59:13 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/21 13:28:39 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/24 12:48:39 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	skip_rs_in(char *input, int i)
+int	check_redir_in_err(char *input, int i)
 {
-	if (input[i] == '<')
-		i++;
-	while (input[i] == ' ')
-		i++;
-	return (i);
-}
-
-int	skip_rs_out(char *input, int i)
-{
-	if (input[i] == '>')
-		i++;
-	while (input[i] == ' ')
-		i++;
-	return (i);
+	if (input[i] == '\0' || input[i] == '>')
+		lex_error("newline");
+	else if (input[i] == '<' && input[i + 1] != '<')
+		lex_error("<");
+	else if (input[i] == '<' && input[i + 1] == '<')
+		lex_error("<<");
+	else if (input[i] == '|')
+		lex_error("|");
+	else if (input[i] == '(')
+		lex_error("(");
+	else if (input[i] == ')')
+		lex_error(")");
+	else if (input[i] == '&')
+		lex_error("&");
+	return (0);
 }
 
 int	check_redir_in(char *input, int i)
@@ -44,24 +45,29 @@ int	check_redir_in(char *input, int i)
 		|| input[i] == '<' || input[i] == '|'
 		|| input[i] == '(' || input[i] == ')'
 		|| input[i] == '&')
-	{
-		if (input[i] == '\0' || input[i] == '>')
-			lex_error("newline");
-		else if (input[i] == '<' && input[i + 1] != '<')
-			lex_error("<");
-		else if (input[i] == '<' && input[i + 1] == '<')
-			lex_error("<<");
-		else if (input[i] == '|')
-			lex_error("|");
-		else if (input[i] == '(')
-			lex_error("(");
-		else if (input[i] == ')')
-			lex_error(")");
-		else if (input[i] == '&')
-			lex_error("&");
-		return (0);
-	}
+		return (check_redir_in_err(input, i));
 	return (i);
+}
+
+int	check_redir_out_err(char *input, int i)
+{
+	if (input[i] == '\0')
+		lex_error("newline");
+	else if (input[i] == '>' && input[i + 1] != '>')
+		lex_error(">");
+	else if (input[i] == '<')
+		lex_error("<");
+	else if (input[i] == '>' && input[i + 1] == '>')
+		lex_error(">>");
+	else if (input[i] == '|')
+		lex_error("|");
+	else if (input[i] == '(')
+		lex_error("(");
+	else if (input[i] == ')')
+		lex_error(")");
+	else if (input[i] == '&')
+		lex_error("&");
+	return (0);
 }
 
 int	check_redir_out(char *input, int i)
@@ -78,25 +84,7 @@ int	check_redir_out(char *input, int i)
 		|| input[i] == '>' || input[i] == '|'
 		|| input[i] == '(' || input[i] == ')'
 		|| input[i] == '&')
-	{
-		if (input[i] == '\0')
-			lex_error("newline");
-		else if (input[i] == '>' && input[i + 1] != '>')
-			lex_error(">");
-		else if (input[i] == '<')
-			lex_error("<");
-		else if (input[i] == '>' && input[i + 1] == '>')
-			lex_error(">>");
-		else if (input[i] == '|')
-			lex_error("|");
-		else if (input[i] == '(')
-			lex_error("(");
-		else if (input[i] == ')')
-			lex_error(")");
-		else if (input[i] == '&')
-			lex_error("&");
-		return (0);
-	}
+		return (check_redir_out_err(input, i));
 	return (i);
 }
 

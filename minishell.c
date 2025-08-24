@@ -6,15 +6,24 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 21:25:54 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/21 21:26:55 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/24 15:34:42 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int minishell(cmd_tree *cmd_lst, env_var *environ)
+void	close_fd()
 {
-	char *input;
+	int fd;
+
+	fd = 2;
+	while (++fd <= 1048575)
+		close(fd);
+}
+
+int	minishell(cmd_tree *cmd_lst, env_var *environ)
+{
+	char	*input;
 
 	get_signals();
 	// g_exit_status = 0;
@@ -31,12 +40,11 @@ int minishell(cmd_tree *cmd_lst, env_var *environ)
 	free(input);
 	if (g_exit_status == 130 || !cmd_lst || cmd_lst->err == -2)
 	{
-		// free_cmd_lst(cmd_lst);
+		free_cmd_tree(cmd_lst);
 		return (0);
 	}
 	execute_node(cmd_lst, true, environ);
-	// free_env(*env);
-	// free(env)
-	// free_cmd_lst(cmd_lst);
+	free_cmd_tree(cmd_lst);
+	// close_fd();
 	return (0);
 }

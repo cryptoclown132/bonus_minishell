@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 14:34:39 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/22 22:16:03 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/24 14:07:32 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 // #define _GNU_SOURCE 
-
 
 # include "libft/libft.h"
 # include <stdio.h>
@@ -70,7 +69,8 @@ typedef enum {
 	TOK_APP,
 	TOK_DOC,
 	TOK_EQUAL, //check later
-	TOK_EOF  //check later
+	TOK_EOF,  //check later
+	TOK_WILD
 } token_type;
 
 typedef struct env_var
@@ -269,16 +269,23 @@ int	word_len(char *s, int *i);
 /* lex_err.c */
 int	check_spaces(char *input);
 int	check_unclosed_quotes(char *input);
-int	check_or(char *input, int i);
-int	check_and(char *input, int i);
 int	check_log_op_2(char *input, int i);
 int	check_log_op(char *input);
-int	check_unclosed_parenthesis(char *input);
 int	lex_error_check(char *input);
 
-/* lex_err_red.c */
+/* lex_err_parenthesis */
+int	check_unclosed_parenthesis(char *input);
+int	check_correct_parenthesis(char *input);
+
+/* lex_err_an_or */
+int	check_or(char *input, int i);
+int	check_and(char *input, int i);
+
+/* lex_err_red_2.c */
 int	skip_rs_in(char *input, int i);
 int	skip_rs_out(char *input, int i);
+
+/* lex_err_red.c */
 int	check_redir_in(char *input, int i);
 int	check_redir_out(char *input, int i);
 int	check_redir(char *input);
@@ -329,9 +336,11 @@ cmd_tree *parse_and(t_tokens **token_lst, env_var environ);
 cmd_tree *parse_pipeline(t_tokens **token_lst, env_var environ);
 
 /* init_cmd_tree.c */
-void	free_string_array(char **arr);
-// int	init_cmd_tree(t_tokens **token_lst, cmd_tree **cmd_lst, char **envp);
 int	init_cmd_tree(t_tokens **token_lst, cmd_tree **cmd_lst, env_var environ);
+
+/* free_tree.c */
+void	free_string_array(char **arr);
+void	free_cmd_tree(cmd_tree *node);
 
 /* parse_cmd.c */
 // cmd_tree *parse_command(t_tokens **token_lst, env_var environ);

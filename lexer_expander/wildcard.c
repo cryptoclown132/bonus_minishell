@@ -60,6 +60,7 @@ for (ssize_t i = 0; i < entry_count; i++)
 	ret = ft_strjoin(ret, paths[i]);
 	free(tmp);
 }
+free(str);
 return (ret);
 }
 
@@ -90,7 +91,8 @@ return (ret);
 		free(tmp);
 	}
 	}
-	// Free splits
 
+	free(str);
+	// Free splits
   return (matching_paths);
 }

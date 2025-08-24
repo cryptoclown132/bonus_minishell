@@ -27,6 +27,46 @@ t_tokens	*init_token(char *input, int *i, int token_type)
 	return (token);
 }
 
+int	check_wildcard(char *input)
+{
+	int		i;
+	char	quote;
+
+	i = -1;
+	while (input[++i])
+	{
+		if (input[i] == '\'' || input[i] == '\"')
+		{
+			quote = input[i++];
+			while (input[i] && quote == '\'' && quote == '\"')
+				i++;
+		}
+		if (input[i] == '<' && input[i + 1] == '<')
+		{
+			while (input[i] && input[i] != ' ' && input[i] != '|'
+				&& input[i] != '<' && input[i] != '>' && input[i] != '&')
+			{
+				if (input[i] == '\'' || input[i] == '\"')
+				{
+					quote = input[i++];
+					while (input[i] && quote == '\'' && quote == '\"')
+						i++;
+				}
+				i++;
+			}
+			if (input[i] == '<' && input[i + 1] == '<')
+			{
+				i--;
+				continue;
+			}
+		}
+		if (input[i] == '*')
+			return (1);
+	}
+	return (0);
+}
+
+//check if tkn needed
 char	*itw_loop(char *input, char *tkn, int *j, env_var environ)
 {
 	t_itw_loop	t;
@@ -52,8 +92,16 @@ char	*itw_loop(char *input, char *tkn, int *j, env_var environ)
 	}
 	if (t.tmp != '\'')
 		t.tmp_str = expander(t.tmp_str, environ);
-	if (t.tmp != '\'' && t.tmp != '"')
-		t.tmp_str = wildcard(t.tmp_str);
+	// if (has_wildcard(t.tmp_str)) // << *sub
+	// {
+		
+	// }
+
+	if (t.tmp != '\'' && t.tmp != '\"')
+	{
+		t.tmp_str = wildcard(t.tmp_str);	
+	}
+
 	tkn = free_both_strjoin(tkn, t.tmp_str);
 	*j = t.k + 1;
 	return (tkn);
@@ -67,17 +115,25 @@ t_tokens	*init_token_word(char *input, int *i, env_var environ)
 
 	j = *i;
 	tkn = NULL;
+	
 	while (input[j] && input[j] != ' ' && input[j] != '|'
 		&& input[j] != '<' && input[j] != '>' && input[j] != '&'
 		&& input[j] != '(' && input[j] != ')')
-	{
 		tkn = itw_loop(input, tkn, &j, environ);
-		*i = j;
-	}
-	*i = j - 1;
+	// *i = j - 1;
 	token = init_token(tkn, i, TOK_WORD);
 	if (ft_strchr(tkn, '=') && valid_input(tkn))
 		token->type = TOK_EQUAL;
+	while (*i < j)
+	{
+		if (input[*i] == '\"' || input[*i] == '\'')
+			break ;
+		else if (input[*i] == '*')
+			token->type = TOK_WILD;
+		(*i)++;
+	}
+	// if (input[])
+	*i = j - 1;
 	return (token);
 }
 

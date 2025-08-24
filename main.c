@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:41:15 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/21 21:22:45 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/23 11:52:14 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ int	execute_node(cmd_tree *cmd_lst, bool in_parent, env_var *environ)
 		return (exec_or(cmd_lst, environ));
 	return (-1);
 }
+
+// sub*: ambiguous redirect
+// << sub* dont work multiple files
+// cat < test -> works onnly 1 file
 
 int	main(int argc, char *argv[], char **envp)
 {

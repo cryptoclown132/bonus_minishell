@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 19:40:38 by fjerinic          #+#    #+#             */
-/*   Updated: 2025/08/21 21:03:36 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/24 12:41:26 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,23 +94,4 @@ int	run_builtin2(cmd_tree *cmd_lst, env_var *environ)
 		return (1);
 	}
 	return (0);
-}
-
-int	is_builtin(char *cmd)
-{
-	if (ft_strcmp(cmd, "echo") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "cd") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "pwd") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "export") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "unset") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "env") == 0)
-		return (0);
-	else if (ft_strcmp(cmd, "exit") == 0)
-		return (0);
-	return (1);
 }
