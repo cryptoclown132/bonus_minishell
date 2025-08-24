@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:41:10 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/21 21:24:26 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/25 00:10:47 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,23 @@ int	check_path(char **env)
 	return (0);
 }
 
+void	fork_correct(cmd_tree *cmd_lst, bool in_parent, env_var *environ)
+{
+	redir_files(cmd_lst);
+	if (run_builtin2(cmd_lst, environ))
+		exit(g_exit_status);
+	if (run_builtin(cmd_lst, environ))
+		handle_builtin(cmd_lst, in_parent, environ);
+	if (check_path(environ->env))
+		execve(cmd_lst->exec.cmd_path, cmd_lst->exec.cmd_split
+			+ cmd_lst->exec.idx_path, environ->env);
+	else
+		execve(cmd_lst->exec.cmd_path, cmd_lst->exec.cmd_split
+			+ cmd_lst->exec.idx_path, environ->vars);
+	set_exit_status("Error: command not found", 127);
+	exit(127);
+}
+
 int	exec_cmd(cmd_tree *cmd_lst, bool in_parent, env_var *environ)
 {
 	pid_t	pid;
@@ -67,21 +84,7 @@ int	exec_cmd(cmd_tree *cmd_lst, bool in_parent, env_var *environ)
 		exit(1);
 	}
 	if (pid == 0)
-	{
-		redir_files(cmd_lst);
-		if (run_builtin2(cmd_lst, environ))
-			exit(g_exit_status);
-		if (run_builtin(cmd_lst, environ))
-			handle_builtin(cmd_lst, in_parent, environ);
-		if (check_path(environ->env))
-			execve(cmd_lst->exec.cmd_path, cmd_lst->exec.cmd_split
-				+ cmd_lst->exec.idx_path, environ->env);
-		else
-			execve(cmd_lst->exec.cmd_path, cmd_lst->exec.cmd_split
-				+ cmd_lst->exec.idx_path, environ->vars);
-		set_exit_status("Error: command not found", 127);
-		exit(127);
-	}
+		fork_correct(cmd_lst, in_parent, environ);
 	waitpid(pid, &status, 0);
 	g_exit_status = WEXITSTATUS(status);
 	return (WEXITSTATUS(status));

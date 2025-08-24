@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 11:10:15 by raweber           #+#    #+#             */
-/*   Updated: 2025/08/21 11:48:38 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/24 22:57:01 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_numeric(char *arg)
 	return (1);
 }
 
-void	builtin_exit(cmd_tree *cmd_struct)
+void	builtin_exit(cmd_tree *cmd_struct, env_var *environ)
 {
 	ft_printf("exit\n");
 	if (cmd_struct->exec.cmd_split[1]
@@ -46,7 +46,7 @@ void	builtin_exit(cmd_tree *cmd_struct)
 		g_exit_status = ft_atoi(cmd_struct->exec.cmd_split[1]);
 	else
 		g_exit_status = 0;
-	// free_cmd_lst(cmd_struct);
-	// free_env(cmd_struct);
+	free_cmd_tree(cmd_struct);
+	free_env(environ);
 	exit(g_exit_status);
 }

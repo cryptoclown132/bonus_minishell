@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 14:06:21 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/24 15:21:58 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/24 22:54:37 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,3 @@ void	free_cmd_tree(cmd_tree *node)
 		free_exec_node(node);
 	free(node);
 }
-//julienkroger     65686   0.0  0.0 410059408    144 s007  R+    3:00PM   0:00.00 grep minishell
-// julienkroger     65669   0.0  0.0 410209376   1824 s009  S+    3:00PM   0:00.01 ./minishell
-// ps aux | grep minishell

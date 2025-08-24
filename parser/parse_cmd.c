@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 21:08:21 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/24 15:52:26 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/25 00:13:04 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,37 +49,29 @@ int	count_args(t_tokens *token_lst)
 
 char	**get_cmd_split(t_tokens **token_lst)
 {
-	char	**new_cmd_split;
-	char	**wildcard_args;
-	int		i;
-	int		j;
-	int		k;
+	t_cmd_split	sp;
 
-	i = count_args(*token_lst);
-	new_cmd_split = ft_calloc(i + 1, sizeof(char*));
-	if (!new_cmd_split)
+	sp.i = count_args(*token_lst);
+	sp.new_cmd_split = ft_calloc(sp.i + 1, sizeof(char *));
+	if (!sp.new_cmd_split)
 		return (set_exit_status("Failed to Malloc", 1));
-		
-	j = 0;
-	while (j < i)
+	sp.j = 0;
+	while (sp.j < sp.i)
 	{
-		if ((*token_lst)->type == TOK_WILD) //check mem leaks here
+		if ((*token_lst)->type == TOK_WILD)
 		{
-			wildcard_args = ft_split((*token_lst)->token, ' ');
-			k = -1;
-			while (wildcard_args && wildcard_args[++k])
-			{
-				new_cmd_split[j++] = wildcard_args[k];
-				// free(wildcard_args[k]);
-			}
-			free(wildcard_args);
+			sp.wildcard_args = ft_split((*token_lst)->token, ' ');
+			sp.k = -1;
+			while (sp.wildcard_args && sp.wildcard_args[++sp.k])
+				sp.new_cmd_split[sp.j++] = sp.wildcard_args[sp.k];
+			free(sp.wildcard_args);
 		}
 		else
-			new_cmd_split[j++] = ft_strdup((*token_lst)->token);
+			sp.new_cmd_split[sp.j++] = ft_strdup((*token_lst)->token);
 		*token_lst = (*token_lst)->next;
 	}
-	new_cmd_split[j] = NULL;
-	return (new_cmd_split);
+	sp.new_cmd_split[sp.j] = NULL;
+	return (sp.new_cmd_split);
 }
 
 void	parse_command(t_tokens **token_lst, env_var environ, cmd_tree **cmd_node)

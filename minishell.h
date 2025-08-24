@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 14:34:39 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/24 14:07:32 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/25 00:14:19 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,14 @@ typedef struct s_itw_loop
 	int		k;
 }t_itw_loop;
 
+typedef struct s_cmd_split
+{
+	char	**new_cmd_split;
+	char	**wildcard_args;
+	int		i;
+	int		j;
+	int		k;
+} t_cmd_split;
 
 // typedef struct s_here_loop
 // {
@@ -220,7 +228,7 @@ void		unset(cmd_tree *cmd_lst, env_var *environ);
 int	get_char_index(const char *s, int c);
 
 // builtin_exit.c
-void		builtin_exit(cmd_tree *cmd_lst);
+void	builtin_exit(cmd_tree *cmd_struct, env_var *environ);
 
 /* builtin_export.c */
 void	builtin_export(cmd_tree *cmd, env_var *environ);
@@ -381,7 +389,9 @@ cmd_tree	*parse_cmd_sequence(t_tokens **token_lst, env_var environ);
 void	get_signals(void);
 void	get_signals_child(void);
 
-
+/* signals_2.c */
+void	ctrl_c(int status);
+void	ctrl_c_child(int status);
 
 /* mini_utils.c */
 char	*user_input(void);

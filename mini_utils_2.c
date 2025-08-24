@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 18:26:12 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/12 21:21:08 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/25 00:17:57 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,19 @@ char	*free_both_strjoin(char *s1, char *s2)
 	if (!ptr)
 		return (set_exit_status("Failed to Malloc", 1));
 	i = 0;
+	while (s1 && s1[i])
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
 	if (s1)
-	{
-		while (s1[i])
-		{
-			ptr[i] = s1[i];
-			i++;
-		}
 		free(s1);
-	}
-	if (s2)
-	{
-		j = 0;
-		while (s2[j])
-			ptr[i++] = s2[j++];
-	}
+	j = 0;
+	while (s2 && s2[j])
+		ptr[i++] = s2[j++];
 	ptr[i] = '\0';
-	free(s2);
+	if (s2)
+		free(s2);
 	return (ptr);
 }
 
@@ -75,23 +71,7 @@ void	free_env(env_var *environ)
 			free(environ->vars[i++]);
 		free(environ->vars);
 	}
-	// free(environ);
 }
-
-// void	fd_closing(int *old_fds, int *new_fds,
-// 			t_cmds *cmd_struct)
-// {
-// 	if (cmd_struct->prev && cmd_struct->log_op != AND && cmd_struct->log_op != OR)
-// 	{
-// 		close(old_fds[1]);
-// 		close(old_fds[0]);
-// 	}
-// 	if (cmd_struct->next && cmd_struct->log_op != AND && cmd_struct->log_op != OR)
-// 	{
-// 		old_fds[0] = new_fds[0];
-// 		old_fds[1] = new_fds[1];
-// 	}
-// }
 
 char	*ft_strjoin_zero(char const *s1, char const *s2)
 {

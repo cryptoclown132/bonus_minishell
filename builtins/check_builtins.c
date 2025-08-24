@@ -6,17 +6,17 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 19:40:38 by fjerinic          #+#    #+#             */
-/*   Updated: 2025/08/24 12:41:26 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/24 22:56:45 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	exit_util(cmd_tree *cmd_lst)
+int	exit_util(cmd_tree *cmd_lst, env_var *environ)
 {
 	if (!ft_strncmp(cmd_lst->exec.cmd_split[0], "exit", 5))
 	{
-		builtin_exit(cmd_lst);
+		builtin_exit(cmd_lst, environ);
 		return (1);
 	}
 	return (0);
@@ -63,7 +63,7 @@ int	run_builtin(cmd_tree *cmd_lst, env_var *environ)
 	}
 	else if (unset_util(cmd_lst, environ))
 		return (1);
-	else if (exit_util(cmd_lst))
+	else if (exit_util(cmd_lst, environ))
 		return (1);
 	return (0);
 }

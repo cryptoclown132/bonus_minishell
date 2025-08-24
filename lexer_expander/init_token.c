@@ -115,12 +115,10 @@ t_tokens	*init_token_word(char *input, int *i, env_var environ)
 
 	j = *i;
 	tkn = NULL;
-	
 	while (input[j] && input[j] != ' ' && input[j] != '|'
 		&& input[j] != '<' && input[j] != '>' && input[j] != '&'
 		&& input[j] != '(' && input[j] != ')')
 		tkn = itw_loop(input, tkn, &j, environ);
-	// *i = j - 1;
 	token = init_token(tkn, i, TOK_WORD);
 	if (ft_strchr(tkn, '=') && valid_input(tkn))
 		token->type = TOK_EQUAL;
@@ -132,7 +130,6 @@ t_tokens	*init_token_word(char *input, int *i, env_var environ)
 			token->type = TOK_WILD;
 		(*i)++;
 	}
-	// if (input[])
 	*i = j - 1;
 	return (token);
 }

@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 11:48:59 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/24 14:06:09 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/24 23:14:35 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	init_cmd_tree(t_tokens **token_lst, cmd_tree **cmd_lst, env_var environ)
 
 	curr_token_lst = *token_lst;
 	*cmd_lst = parse_or(&curr_token_lst, environ);
-	while (*token_lst != NULL) // && g_exit_status != 130
+	while (*token_lst != NULL)
 	{
 		tmp_t = (*token_lst)->next;
 		free((*token_lst)->token);

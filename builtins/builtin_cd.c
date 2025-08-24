@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 19:52:10 by fjerinic          #+#    #+#             */
-/*   Updated: 2025/08/12 19:42:42 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/24 22:51:43 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	update_env(env_var *environ, char *new_pwd_path,
 	if (environ->env[i] && ft_strnstr(environ->env[i],
 			"PWD=", 4))
 	{
-		// free(cmd_lst->env[i]);
+		free(environ->env[i]);
 		environ->env[i] = ft_strjoin("PWD=", new_pwd_path);
 	}
 	else
@@ -71,7 +71,7 @@ static void	update_env(env_var *environ, char *new_pwd_path,
 	if (environ->env[i] && ft_strnstr(environ->env[i],
 			"OLDPWD", 6))
 	{
-		// free(cmd_lst->env[i]);
+		free(environ->env[i]);
 		environ->env[i] = ft_strjoin_zero("OLDPWD=",
 				old_pwd_path);
 	}
@@ -89,15 +89,16 @@ int	run_cd_home(cmd_tree *cmd_lst, char *old_path, env_var *environ)
 		if (env_return && chdir(env_return))
 		{
 			set_exit_status("Error while running <cd $HOME>", 1);
-			// free(old_path);
-			// free(env_return);
+			free(old_path);
+			free(env_return);
 			return (1);
 		}
 		(void)old_path;
-		// free(old_path);
-		// free(env_return);
+		free(old_path);
+		free(env_return);
 		return (1);
 	}
+	free(env_return);
 	return (0);
 }
 
@@ -115,11 +116,11 @@ void	cd(cmd_tree *cmd_lst, env_var *environ)
 			set_exit_status("cd: invalid option", 1);
 		else
 			set_exit_status("cd: No such file or directory", 1);
-		// free(old_path);
+		free(old_path);
 		return ;
 	}
 	new_path = getcwd(NULL, 0);
 	update_env(environ, new_path, old_path);
-	// free(old_path);
-	// free(new_path);
+	free(old_path);
+	free(new_path);
 }

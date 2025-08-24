@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:41:15 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/23 11:52:14 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/25 00:04:42 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	main(int argc, char *argv[], char **envp)
 	environ.vars = NULL;
 	while (1)
 		minishell(cmd_lst, &environ);
-
-    //free(env)
 }
+
+//julienkroger     65686   0.0  0.0 410059408    144 s007  R+    3:00PM   0:00.00 grep minishell
+// julienkroger     65669   0.0  0.0 410209376   1824 s009  S+    3:00PM   0:00.01 ./minishell
+// ps aux | grep minishell
