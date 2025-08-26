@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 21:08:21 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 18:13:14 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 19:39:53 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	parse_subshell(t_tokens **token_lst, t_env_var environ,
 	child = parse_or(token_lst, environ);
 	*token_lst = (*token_lst)->next;
 	*cmd_node = new_node(NODE_SUBSHELL);
-	(*cmd_node)->subshell.child = child;
+	(*cmd_node)->s_subshell.child = child;
 }
 
 void	parse_command(t_tokens **token_lst, t_env_var environ,
@@ -96,17 +96,17 @@ void	parse_command(t_tokens **token_lst, t_env_var environ,
 		parse_subshell(token_lst, environ, cmd_node);
 		return ;
 	}
-	(*cmd_node)->exec.cmd_split = get_cmd_split(token_lst);
-	(*cmd_node)->exec.cmd_path = NULL;
-	(*cmd_node)->exec.idx_path = 0;
+	(*cmd_node)->s_exec.cmd_split = get_cmd_split(token_lst);
+	(*cmd_node)->s_exec.cmd_path = NULL;
+	(*cmd_node)->s_exec.idx_path = 0;
 	i = -1;
-	while ((*cmd_node)->exec.cmd_split && (*cmd_node)->exec.cmd_split[++i])
+	while ((*cmd_node)->s_exec.cmd_split && (*cmd_node)->s_exec.cmd_split[++i])
 	{
-		if (!ft_strchr((*cmd_node)->exec.cmd_split[i], '='))
+		if (!ft_strchr((*cmd_node)->s_exec.cmd_split[i], '='))
 		{
-			(*cmd_node)->exec.cmd_path = get_cmd_path(environ,
-					(*cmd_node)->exec.cmd_split[i], *cmd_node);
-			(*cmd_node)->exec.idx_path = i;
+			(*cmd_node)->s_exec.cmd_path = get_cmd_path(environ,
+					(*cmd_node)->s_exec.cmd_split[i], *cmd_node);
+			(*cmd_node)->s_exec.idx_path = i;
 			break ;
 		}
 	}

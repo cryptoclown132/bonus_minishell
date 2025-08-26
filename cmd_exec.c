@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:41:10 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 18:15:13 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 19:57:29 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +55,17 @@ int	check_path(char **env)
 void	fork_correct(t_cmd_tree *cmd_lst, bool in_parent, t_env_var *environ)
 {
 	get_signals_child();
-
 	redir_files(cmd_lst);
 	if (run_builtin2(cmd_lst, environ))
 		exit(g_exit_status);
 	if (run_builtin(cmd_lst, environ))
 		handle_builtin(cmd_lst, in_parent, environ);
 	if (check_path(environ->env))
-		execve(cmd_lst->exec.cmd_path, cmd_lst->exec.cmd_split
-			+ cmd_lst->exec.idx_path, environ->env);
+		execve(cmd_lst->s_exec.cmd_path, cmd_lst->s_exec.cmd_split
+			+ cmd_lst->s_exec.idx_path, environ->env);
 	else
-		execve(cmd_lst->exec.cmd_path, cmd_lst->exec.cmd_split
-			+ cmd_lst->exec.idx_path, environ->vars);
+		execve(cmd_lst->s_exec.cmd_path, cmd_lst->s_exec.cmd_split
+			+ cmd_lst->s_exec.idx_path, environ->vars);
 	set_exit_status("Error: command not found", 127);
 	exit(127);
 }

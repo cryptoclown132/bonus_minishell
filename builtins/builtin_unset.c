@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 00:59:06 by fjerinic          #+#    #+#             */
-/*   Updated: 2025/08/26 18:06:40 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 19:44:38 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,19 @@ char	**reorder_array(char **env, int n)
 void	arrange_env(t_cmd_tree *cmd_struct, t_env_var *environ, int n, int j)
 {
 	if (environ->env && environ->env[n] && !ft_strncmp(environ->env[n],
-			cmd_struct->exec.cmd_split[j],
-			ft_strlen(cmd_struct->exec.cmd_split[j])))
+			cmd_struct->s_exec.cmd_split[j],
+			ft_strlen(cmd_struct->s_exec.cmd_split[j])))
 		environ->env = reorder_array(environ->env, n);
 	else
 	{
 		n = 0;
 		while (environ->vars && environ->vars[n] && ft_strncmp(environ->vars[n],
-				cmd_struct->exec.cmd_split[j],
-				ft_strlen(cmd_struct->exec.cmd_split[j])))
+				cmd_struct->s_exec.cmd_split[j],
+				ft_strlen(cmd_struct->s_exec.cmd_split[j])))
 			n++;
 		if (environ->vars && environ->vars[n] && !ft_strncmp(environ->vars[n],
-				cmd_struct->exec.cmd_split[j],
-				ft_strlen(cmd_struct->exec.cmd_split[j])))
+				cmd_struct->s_exec.cmd_split[j],
+				ft_strlen(cmd_struct->s_exec.cmd_split[j])))
 			environ->vars = reorder_array(environ->vars, n);
 	}
 }
@@ -97,14 +97,14 @@ void	unset(t_cmd_tree *cmd_struct, t_env_var *environ)
 	int	j;
 
 	j = -1;
-	while (cmd_struct->exec.cmd_split[++j])
+	while (cmd_struct->s_exec.cmd_split[++j])
 	{
-		if (!check_valid_unset_variable(cmd_struct->exec.cmd_split[j]))
+		if (!check_valid_unset_variable(cmd_struct->s_exec.cmd_split[j]))
 			return ;
 		n = 0;
 		while (environ->env && environ->env[n] && ft_strncmp(environ->env[n],
-				cmd_struct->exec.cmd_split[j],
-				ft_strlen(cmd_struct->exec.cmd_split[j])))
+				cmd_struct->s_exec.cmd_split[j],
+				ft_strlen(cmd_struct->s_exec.cmd_split[j])))
 			n++;
 		arrange_env(cmd_struct, environ, n, j);
 	}

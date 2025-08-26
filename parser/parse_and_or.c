@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_and_or.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 13:45:29 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 18:12:50 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 19:40:26 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 t_cmd_tree	*init_node_and(t_cmd_tree *n, t_cmd_tree *left, t_cmd_tree *right)
 {
-	n->and.left = left;
-	n->and.right = right;
+	n->s_and.left = left;
+	n->s_and.right = right;
 	return (n);
 }
 
 t_cmd_tree	*init_node_or(t_cmd_tree *n, t_cmd_tree *left, t_cmd_tree *right)
 {
-	n->or.left = left;
-	n->or.right = right;
+	n->s_or.left = left;
+	n->s_or.right = right;
 	return (n);
 }
 

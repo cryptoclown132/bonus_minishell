@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 14:34:39 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/26 18:07:52 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 20:17:39 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # include <sys/wait.h>
 # include <stdbool.h>
 # include <termios.h>
+# include <sys/types.h>
+# include <dirent.h>
 
 # ifdef __linux__
 // Linux

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 21:27:02 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 18:16:21 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 19:33:43 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	redirect_parent(int *pipefd, t_cmd_tree *cmd_lst, t_env_var *environ)
 		dup2(cmd_lst->infile, STDIN_FILENO);
 		close(cmd_lst->infile);
 		close(pipefd[0]);
-		exit(execute_node(cmd_lst->pipe.right, false, environ));
+		exit(execute_node(cmd_lst->s_pipe.right, false, environ));
 	}
 	else
 	{
 		dup2(pipefd[0], STDIN_FILENO);
 		close(pipefd[1]);
 		close(pipefd[0]);
-		exit(execute_node(cmd_lst->pipe.right, false, environ));
+		exit(execute_node(cmd_lst->s_pipe.right, false, environ));
 	}
 }
 
@@ -41,14 +41,14 @@ void	redirect_child(int *pipefd, t_cmd_tree *cmd_lst, t_env_var *environ)
 		dup2(cmd_lst->outfile, STDOUT_FILENO);
 		close(cmd_lst->outfile);
 		close(pipefd[1]);
-		exit(execute_node(cmd_lst->pipe.left, false, environ));
+		exit(execute_node(cmd_lst->s_pipe.left, false, environ));
 	}
 	else
 	{
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[0]);
 		close(pipefd[1]);
-		exit(execute_node(cmd_lst->pipe.left, false, environ));
+		exit(execute_node(cmd_lst->s_pipe.left, false, environ));
 	}
 }
 

@@ -27,45 +27,6 @@ t_tokens	*init_token(char *input, int *i, int token_type)
 	return (token);
 }
 
-int	check_wildcard(char *input)
-{
-	int		i;
-	char	quote;
-
-	i = -1;
-	while (input[++i])
-	{
-		if (input[i] == '\'' || input[i] == '\"')
-		{
-			quote = input[i++];
-			while (input[i] && quote == '\'' && quote == '\"')
-				i++;
-		}
-		if (input[i] == '<' && input[i + 1] == '<')
-		{
-			while (input[i] && input[i] != ' ' && input[i] != '|'
-				&& input[i] != '<' && input[i] != '>' && input[i] != '&')
-			{
-				if (input[i] == '\'' || input[i] == '\"')
-				{
-					quote = input[i++];
-					while (input[i] && quote == '\'' && quote == '\"')
-						i++;
-				}
-				i++;
-			}
-			if (input[i] == '<' && input[i + 1] == '<')
-			{
-				i--;
-				continue ;
-			}
-		}
-		if (input[i] == '*')
-			return (1);
-	}
-	return (0);
-}
-
 char	*itw_loop_no_quotes(char *input, char *tmp_str, int *j, int *k)
 {
 	while (input[*k] && input[*k] != '\'' && input[*k] != '"'

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 19:52:10 by fjerinic          #+#    #+#             */
-/*   Updated: 2025/08/26 18:04:41 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 19:35:21 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	run_cd_home(t_cmd_tree *cmd_lst, char *old_path, t_env_var *environ)
 	env_return = get_env(environ, "HOME=");
 	if (!env_return)
 		return (1);
-	if (!cmd_lst->exec.cmd_split[1])
+	if (!cmd_lst->s_exec.cmd_split[1])
 	{
 		if (env_return && chdir(env_return))
 		{
@@ -110,9 +110,9 @@ void	cd(t_cmd_tree *cmd_lst, t_env_var *environ)
 	old_path = getcwd(NULL, 0);
 	if (run_cd_home(cmd_lst, old_path, environ))
 		return ;
-	if (chdir(cmd_lst->exec.cmd_split[1]))
+	if (chdir(cmd_lst->s_exec.cmd_split[1]))
 	{
-		if (cmd_lst->exec.cmd_split[1][0] == '-')
+		if (cmd_lst->s_exec.cmd_split[1][0] == '-')
 			set_exit_status("cd: invalid option", 1);
 		else
 			set_exit_status("cd: No such file or directory", 1);

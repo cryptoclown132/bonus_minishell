@@ -3,30 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 21:25:54 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 18:16:01 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 20:02:34 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	close_fd(void)
-{
-	int	fd;
-
-	fd = 2;
-	while (++fd <= 1048575)
-		close(fd);
-}
 
 int	minishell(t_cmd_tree *cmd_lst, t_env_var *environ)
 {
 	char	*input;
 
 	get_signals();
-	// g_exit_status = 0;
 	input = user_input();
 	if (!input)
 	{
@@ -46,6 +36,5 @@ int	minishell(t_cmd_tree *cmd_lst, t_env_var *environ)
 	}
 	execute_node(cmd_lst, true, environ);
 	free_cmd_tree(cmd_lst);
-	// close_fd();
 	return (0);
 }

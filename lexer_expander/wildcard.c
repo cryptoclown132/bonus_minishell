@@ -1,98 +1,85 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wildcard.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/26 20:17:47 by jkroger           #+#    #+#             */
+/*   Updated: 2025/08/26 20:17:48 by jkroger          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-#include <sys/types.h>
-#include <dirent.h>
-
-// char  **read_curr_dir()
-// {
-//   const DIR *curr_dir = opendir(".");
-//   struct dirent *next_dir;
-
-//   // Error handling of opendir
-//   next_dir = readdir(curr_dir);
-//   while (next_dir)
-//   {
-//     next_dir = readdir(curr_dir);
-//   }
-// }
-
-char  *wildcard(char *str)
+bool	path_matches(char *pattern, char *path, bool wildcard_active)
 {
-	// Count entries in curr dic
-	DIR     *curr_dir = opendir(".");
-	ssize_t     entry_count = 0;
-	while (readdir(curr_dir))
-	++entry_count;
-	closedir((DIR *)curr_dir);
-
-	// Allocate enough memory
-	char paths[entry_count][PATH_SIZE];
-
-	// Populate the array with the actuall paths
-	curr_dir = opendir(".");
-	struct dirent *next_dir = readdir(curr_dir);
-	ssize_t idx = 0;
-	while (next_dir)
+	if (*pattern == '*')
+		return (path_matches(pattern + 1, path, true));
+	if ((*pattern == '\0') && (*path == '\0'))
+		return (true);
+	if (*pattern == '\0' && *path != '\0' && !wildcard_active)
+		return (false);
+	if (*pattern == '\0' && *path != '\0' && wildcard_active)
+		return (true);
+	if (*pattern != '\0' && *path == '\0')
+		return (false);
+	if (*pattern == *path && !wildcard_active)
+		return (path_matches(pattern + 1, path + 1, false));
+	if (*pattern == *path && wildcard_active)
 	{
-		if (next_dir->d_name[0] != '.')
-		{
-			ft_strlcpy(paths[idx], next_dir->d_name, PATH_SIZE);
-			idx++;
-		}
-		next_dir = readdir(curr_dir);
+		if (path_matches(pattern + 1, path + 1, false) == false)
+			return (path_matches(pattern, path + 1, true));
+		else
+			return (true);
 	}
-
-  // Special case: str == "*"
-if (!ft_strncmp(str, "*", ft_strlen(str)))
-{
-char  *tmp;
-char  *ret = calloc(1, 1);
-
-for (ssize_t i = 0; i < entry_count; i++)
-{
-	if (i != 0)
-	{
-	tmp = ret;
-	ret = ft_strjoin(ret, " ");
-	free(tmp);
-	}
-	tmp = ret;
-	ret = ft_strjoin(ret, paths[i]);
-	free(tmp);
-}
-free(str);
-return (ret);
+	if (*pattern != *path && wildcard_active)
+		return (path_matches(pattern, path + 1, true));
+	if (*pattern != *path && !wildcard_active)
+		return (false);
+	return (true);
 }
 
-	// Split the string at every '*'
-	char  **splits = ft_split(str, '*');
-	if (!splits || !ft_strncmp(str, splits[0], ft_strlen(str)))
-	return str;
+void	append_path(char **matching_paths, char *to_append)
+{
+	char	*tmp;
 
-	// Find all paths that match the pattern
-	char  *matching_paths = ft_calloc(1, 1);
-	for (ssize_t path_idx = 0; path_idx < entry_count; path_idx++)
+	if (ft_strlen(*matching_paths) != 0)
 	{
-	char  *substr = paths[path_idx];
-	for (ssize_t split_idx = 0; splits[split_idx]; split_idx++)
-	{
-		substr = ft_strnstr(substr, splits[split_idx], ft_strlen(substr));
-		if (!substr)
-		break;
-	}
-
-	if (substr)
-	{
-		char  *tmp = matching_paths;
-		matching_paths = ft_strjoin(matching_paths, " ");
-		free(tmp);
-		tmp = matching_paths;
-		matching_paths = ft_strjoin(matching_paths, paths[path_idx]);
+		tmp = *matching_paths;
+		*matching_paths = ft_strjoin(*matching_paths, " ");
 		free(tmp);
 	}
-	}
+	tmp = *matching_paths;
+	*matching_paths = ft_strjoin(*matching_paths, to_append);
+	free(tmp);
+}
 
-	free(str);
-	// Free splits
-  return (matching_paths);
+char	*wildcard(char *pattern)
+{
+	DIR				*dirp;
+	struct dirent	*dirent;
+	char			*matching_paths;
+	const bool		match_all = ft_strlen(pattern) == 1 && *pattern == '*';
+	const bool		match_hidden_files = pattern[0] == '.';
+
+	matching_paths = ft_calloc(1, 1);
+	dirp = opendir(".");
+	dirent = readdir(dirp);
+	while (dirent || closedir(dirp))
+	{
+		if ((match_all && dirent->d_name[0] != '.')
+			|| (dirent->d_name[0] == '.' && match_hidden_files && path_matches
+				(pattern, dirent->d_name, false)) || (path_matches
+				(pattern, dirent->d_name, false) && dirent->d_name[0] != '.'))
+			append_path(&matching_paths, dirent->d_name);
+		dirent = readdir(dirp);
+	}
+	if (ft_strlen(matching_paths) == 0)
+	{
+		free(matching_paths);
+		return (pattern);
+	}
+	free(pattern);
+	return (matching_paths);
 }

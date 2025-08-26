@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 17:12:06 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/26 18:05:41 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 19:42:13 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ int	export_err(t_cmd_tree *cmd, char *str, int i, t_env_var *environ)
 		printf("shell: export: `%s': not a valid identifier\n", str);
 		return (1);
 	}
-	if (!ft_strcmp("PWD", cmd->exec.cmd_split[i])
-		&& !find_var(environ->env, cmd->exec.cmd_split[i]))
+	if (!ft_strcmp("PWD", cmd->s_exec.cmd_split[i])
+		&& !find_var(environ->env, cmd->s_exec.cmd_split[i]))
 	{
 		add_env(environ, "PWD=");
 		return (1);

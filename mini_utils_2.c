@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 18:26:12 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/25 00:17:57 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 19:32:54 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	valid_input(char *input)
 	return (1);
 }
 
-void	free_env(env_var *environ)
+void	free_env(t_env_var *environ)
 {
 	int	i;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_4.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:01:37 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 18:05:58 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 19:52:01 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,18 +91,19 @@ int	var_lst(t_cmd_tree *cmd_lst, t_env_var *environ)
 {
 	int	i;
 
-	if (cmd_lst->type != NODE_EXEC || !cmd_lst->exec.cmd_split)
+	if (cmd_lst->type != NODE_EXEC || !cmd_lst->s_exec.cmd_split)
 		return (0);
-	if (ft_strchr(cmd_lst->exec.cmd_split[0], '=')
-		&& ft_isalpha(cmd_lst->exec.cmd_split[0][0]) && !cmd_lst->exec.cmd_path)
+	if (ft_strchr(cmd_lst->s_exec.cmd_split[0], '=')
+		&& ft_isalpha(cmd_lst->s_exec.cmd_split[0][0])
+		&& !cmd_lst->s_exec.cmd_path)
 	{
 		i = -1;
-		while (cmd_lst->exec.cmd_split[++i])
+		while (cmd_lst->s_exec.cmd_split[++i])
 		{
-			if (find_var_in_env(environ->env, cmd_lst->exec.cmd_split[i]))
-				add_env(environ, cmd_lst->exec.cmd_split[i]);
+			if (find_var_in_env(environ->env, cmd_lst->s_exec.cmd_split[i]))
+				add_env(environ, cmd_lst->s_exec.cmd_split[i]);
 			else
-				add_var(cmd_lst->exec.cmd_split[i], environ);
+				add_var(cmd_lst->s_exec.cmd_split[i], environ);
 		}
 		return (1);
 	}

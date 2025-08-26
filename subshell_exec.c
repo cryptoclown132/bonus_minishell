@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subshell_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 21:27:14 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 18:16:36 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 19:34:05 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	exec_subshell(t_cmd_tree *cmd_lst, t_env_var *environ)
 		exit(1);
 	}
 	if (pid == 0)
-		exit(execute_node(cmd_lst->subshell.child, true, environ));
+		exit(execute_node(cmd_lst->s_subshell.child, true, environ));
 	waitpid(pid, &status, 0);
 	return (get_exit_status(status));
 }

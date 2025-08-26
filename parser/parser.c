@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 23:18:36 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 18:14:40 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 20:06:41 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ t_cmd_tree	*parse(t_cmd_tree *cmd_lst, char **input, t_env_var environ)
 	*input = check_for_open_and(*input);
 	if (g_exit_status == 2 || g_exit_status == 130)
 	{
-		// free(*input);
 		if (cmd_lst)
 			cmd_lst->err = -2;
 		return (cmd_lst);

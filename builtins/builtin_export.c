@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:56:19 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/26 18:06:20 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 19:43:32 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,25 +104,25 @@ void	builtin_export(t_cmd_tree *cmd, t_env_var *environ)
 	int	i;
 	int	j;
 
-	if (!cmd->exec.cmd_split[1])
+	if (!cmd->s_exec.cmd_split[1])
 		export_without_args(environ);
 	i = 0;
-	while (cmd->exec.cmd_split[++i])
+	while (cmd->s_exec.cmd_split[++i])
 	{
-		j = export_err(cmd, cmd->exec.cmd_split[i], i, environ);
+		j = export_err(cmd, cmd->s_exec.cmd_split[i], i, environ);
 		if (j == 0 && i == 1)
 			return ;
 		if (j == 1)
 			continue ;
-		if (ft_strchr(cmd->exec.cmd_split[i], '='))
-			add_env(environ, cmd->exec.cmd_split[i]);
+		if (ft_strchr(cmd->s_exec.cmd_split[i], '='))
+			add_env(environ, cmd->s_exec.cmd_split[i]);
 		else
 		{
-			if (find_var(environ->vars, cmd->exec.cmd_split[i]))
+			if (find_var(environ->vars, cmd->s_exec.cmd_split[i]))
 			{
 				add_env(environ, find_var(environ->vars,
-						cmd->exec.cmd_split[i]));
-				del_var(environ, cmd->exec.cmd_split[i]);
+						cmd->s_exec.cmd_split[i]));
+				del_var(environ, cmd->s_exec.cmd_split[i]);
 			}
 		}
 	}
