@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 15:41:01 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/26 18:11:57 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 21:09:20 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	here_doc_loop(char	*limiter, int fd, t_env_var environ)
 {
 	char		*input;
 	char		*tmp;
-
+	
 	input = readline("> ");
 	while (input && g_exit_status != 130)
 	{

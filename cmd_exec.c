@@ -6,7 +6,7 @@
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:41:10 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 19:57:29 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/26 21:57:00 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	fork_correct(t_cmd_tree *cmd_lst, bool in_parent, t_env_var *environ)
 		exit(g_exit_status);
 	if (run_builtin(cmd_lst, environ))
 		handle_builtin(cmd_lst, in_parent, environ);
+	if (!cmd_lst->s_exec.cmd_path && !cmd_lst->s_exec.cmd_split)
+		exit(0);
 	if (check_path(environ->env))
 		execve(cmd_lst->s_exec.cmd_path, cmd_lst->s_exec.cmd_split
 			+ cmd_lst->s_exec.idx_path, environ->env);

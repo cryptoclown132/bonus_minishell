@@ -6,7 +6,7 @@
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 21:08:21 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 19:39:53 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/26 21:47:41 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char	**get_cmd_split(t_tokens **token_lst)
 	t_cmd_split	sp;
 
 	sp.i = count_args(*token_lst);
+	if (!sp.i)
+		return NULL;
 	sp.new_cmd_split = ft_calloc(sp.i + 1, sizeof(char *));
 	if (!sp.new_cmd_split)
 		return (set_exit_status("Failed to Malloc", 1));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 21:10:19 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 18:14:15 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 21:11:45 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

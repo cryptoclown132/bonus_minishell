@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 00:12:31 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 17:20:02 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 21:02:15 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ctrl_c(int status)
 		disable_echo();
 		if (ioctl(STDIN_FILENO, TIOCSTI, "\n") == -1)
 			strerror(errno);
+		write(1, "\n", 1);
 		enable_echo();
 		rl_replace_line("", 0);
 		rl_on_new_line();
