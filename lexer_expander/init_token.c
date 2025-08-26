@@ -106,18 +106,3 @@ t_tokens	*init_redir(char *input, int *i, int type, t_env_var environ)
 	*i = j;
 	return (token);
 }
-
-void	add_token(t_tokens **token_lst, t_tokens *token)
-{
-	t_tokens	*first;
-
-	first = *token_lst;
-	if (*token_lst == NULL)
-		*token_lst = token;
-	else
-	{
-		while (first->next != NULL)
-			first = first->next;
-		first->next = token;
-	}
-}

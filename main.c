@@ -6,7 +6,7 @@
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:41:15 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 20:00:24 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/26 20:27:58 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	execute_node(t_cmd_tree *cmd_lst, bool in_parent, t_env_var *environ)
 int	main(int argc, char *argv[], char **envp)
 {
 	t_cmd_tree	*cmd_lst;
-	t_env_var		environ;
+	t_env_var	environ;
 
 	cmd_lst = NULL;
 	if (argc > 1)
