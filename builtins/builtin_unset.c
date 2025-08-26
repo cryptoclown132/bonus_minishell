@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 00:59:06 by fjerinic          #+#    #+#             */
-/*   Updated: 2025/08/22 14:28:30 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:06:40 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	**reorder_array(char **env, int n)
 	return (env);
 }
 
-void	arrange_env(cmd_tree *cmd_struct, env_var *environ, int n, int j)
+void	arrange_env(t_cmd_tree *cmd_struct, t_env_var *environ, int n, int j)
 {
 	if (environ->env && environ->env[n] && !ft_strncmp(environ->env[n],
 			cmd_struct->exec.cmd_split[j],
@@ -91,7 +91,7 @@ void	arrange_env(cmd_tree *cmd_struct, env_var *environ, int n, int j)
 	}
 }
 
-void	unset(cmd_tree *cmd_struct, env_var *environ)
+void	unset(t_cmd_tree *cmd_struct, t_env_var *environ)
 {
 	int	n;
 	int	j;

@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 17:12:06 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/21 13:38:54 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:05:41 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	**put_quotes(char **expo)
 	return (expo);
 }
 
-void	export_without_args(env_var *environ)
+void	export_without_args(t_env_var *environ)
 {
 	char	**expo;
 	int		i;
@@ -73,7 +73,7 @@ void	export_without_args(env_var *environ)
 	free(expo);
 }
 
-int	export_err(cmd_tree *cmd, char *str, int i, env_var *environ)
+int	export_err(t_cmd_tree *cmd, char *str, int i, t_env_var *environ)
 {
 	if (str[0] == '-' && str[1] && i == 1)
 	{

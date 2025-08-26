@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/12 23:03:13 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/22 14:06:22 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:05:25 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_var(char **vars, char *var)
 	return (0);
 }
 
-void	del_var(env_var *environ, char *var)
+void	del_var(t_env_var *environ, char *var)
 {
 	int		i;
 	int		j;

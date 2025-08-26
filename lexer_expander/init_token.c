@@ -57,7 +57,7 @@ int	check_wildcard(char *input)
 			if (input[i] == '<' && input[i + 1] == '<')
 			{
 				i--;
-				continue;
+				continue ;
 			}
 		}
 		if (input[i] == '*')
@@ -66,8 +66,19 @@ int	check_wildcard(char *input)
 	return (0);
 }
 
-//check if tkn needed
-char	*itw_loop(char *input, char *tkn, int *j, env_var environ)
+char	*itw_loop_no_quotes(char *input, char *tmp_str, int *j, int *k)
+{
+	while (input[*k] && input[*k] != '\'' && input[*k] != '"'
+		&& input[*k] != '\n' && input[*k] != '|' && input[*k] != '<'
+		&& input[*k] != '>' && input[*k] != ' ' && input[*k] != '&'
+		&& input[*k] != '(' && input[*k] != ')')
+		(*k)++;
+	tmp_str = ft_substr(input, *j, *k - *j);
+	(*k)--;
+	return (tmp_str);
+}
+
+char	*itw_loop(char *input, char *tkn, int *j, t_env_var environ)
 {
 	t_itw_loop	t;
 
@@ -81,33 +92,17 @@ char	*itw_loop(char *input, char *tkn, int *j, env_var environ)
 		t.tmp_str = ft_substr(input, *j + 1, t.k - *j - 1);
 	}
 	else
-	{
-		while (input[t.k] && input[t.k] != '\'' && input[t.k] != '"'
-			&& input[t.k] != '\n' && input[t.k] != '|' && input[t.k] != '<'
-			&& input[t.k] != '>' && input[t.k] != ' ' && input[t.k] != '&'
-			&& input[t.k] != '(' && input[t.k] != ')')
-			t.k++;
-		t.tmp_str = ft_substr(input, *j, t.k - *j);
-		t.k--;
-	}
+		t.tmp_str = itw_loop_no_quotes(input, t.tmp_str, j, &t.k);
 	if (t.tmp != '\'')
 		t.tmp_str = expander(t.tmp_str, environ);
-	// if (has_wildcard(t.tmp_str)) // << *sub
-	// {
-		
-	// }
-
 	if (t.tmp != '\'' && t.tmp != '\"')
-	{
-		t.tmp_str = wildcard(t.tmp_str);	
-	}
-
+		t.tmp_str = wildcard(t.tmp_str);
 	tkn = free_both_strjoin(tkn, t.tmp_str);
 	*j = t.k + 1;
 	return (tkn);
 }
 
-t_tokens	*init_token_word(char *input, int *i, env_var environ)
+t_tokens	*init_token_word(char *input, int *i, t_env_var environ)
 {
 	int			j;
 	char		*tkn;
@@ -134,7 +129,7 @@ t_tokens	*init_token_word(char *input, int *i, env_var environ)
 	return (token);
 }
 
-t_tokens	*init_redir(char *input, int *i, int type, env_var environ)
+t_tokens	*init_redir(char *input, int *i, int type, t_env_var environ)
 {
 	t_tokens	*token;
 	int			j;

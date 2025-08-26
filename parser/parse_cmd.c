@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 21:08:21 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/25 00:13:04 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:13:14 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,26 @@ char	**get_cmd_split(t_tokens **token_lst)
 	return (sp.new_cmd_split);
 }
 
-void	parse_command(t_tokens **token_lst, env_var environ, cmd_tree **cmd_node)
+void	parse_subshell(t_tokens **token_lst, t_env_var environ,
+		t_cmd_tree **cmd_node)
 {
-	cmd_tree	*child;
-	int			i;
+	t_cmd_tree	*child;
+
+	*token_lst = (*token_lst)->next;
+	child = parse_or(token_lst, environ);
+	*token_lst = (*token_lst)->next;
+	*cmd_node = new_node(NODE_SUBSHELL);
+	(*cmd_node)->subshell.child = child;
+}
+
+void	parse_command(t_tokens **token_lst, t_env_var environ,
+		t_cmd_tree **cmd_node)
+{
+	int	i;
 
 	if (*token_lst && (*token_lst)->type == TOK_LPAREN)
 	{
-		*token_lst = (*token_lst)->next;
-		child = parse_or(token_lst, environ);
-		*token_lst = (*token_lst)->next;
-		*cmd_node = new_node(NODE_SUBSHELL);
-		(*cmd_node)->subshell.child = child;
+		parse_subshell(token_lst, environ, cmd_node);
 		return ;
 	}
 	(*cmd_node)->exec.cmd_split = get_cmd_split(token_lst);

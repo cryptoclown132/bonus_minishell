@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 17:56:19 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/21 13:40:34 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:06:20 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*find_var(char **vars, char *var)
 	return (NULL);
 }
 
-void	add_env_loop(env_var *environ, char **envcp, char *var)
+void	add_env_loop(t_env_var *environ, char **envcp, char *var)
 {
 	int	i;
 
@@ -52,7 +52,7 @@ void	add_env_loop(env_var *environ, char **envcp, char *var)
 	environ->env[i] = NULL;
 }
 
-void	add_env(env_var *environ, char *var)
+void	add_env(t_env_var *environ, char *var)
 {
 	int		i;
 	char	**envcp;
@@ -99,7 +99,7 @@ char	**sort_export(char **expo)
 	return (expo);
 }
 
-void	builtin_export(cmd_tree *cmd, env_var *environ)
+void	builtin_export(t_cmd_tree *cmd, t_env_var *environ)
 {
 	int	i;
 	int	j;

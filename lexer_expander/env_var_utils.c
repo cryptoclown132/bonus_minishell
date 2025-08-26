@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 20:51:29 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/22 14:49:55 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:10:24 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*var_finder_2(char **env, char *var)
 	return (NULL);
 }
 
-char	*var_finder(env_var environ, char *var)
+char	*var_finder(t_env_var environ, char *var)
 {
 	char	*var_found;
 
@@ -43,7 +43,7 @@ char	*var_finder(env_var environ, char *var)
 	return (var_found);
 }
 
-void	var_exist(char *token, env_var environ, int *i, char **var_value)
+void	var_exist(char *token, t_env_var environ, int *i, char **var_value)
 {
 	int		j;
 
@@ -63,7 +63,7 @@ void	var_exist(char *token, env_var environ, int *i, char **var_value)
 	*i = j;
 }
 
-int	get_len(char *token, env_var environ)
+int	get_len(char *token, t_env_var environ)
 {
 	int		i;
 	int		var_len;
@@ -85,7 +85,7 @@ int	get_len(char *token, env_var environ)
 	return (var_len);
 }
 
-void	cat_var(char *token, env_var environ, char **var_value, t_get_var *v)
+void	cat_var(char *token, t_env_var environ, char **var_value, t_get_var *v)
 {
 	char	*tmp;
 	int		k;

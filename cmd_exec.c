@@ -6,13 +6,13 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:41:10 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/25 00:10:47 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:15:13 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	handle_builtin(cmd_tree *cmd_lst, bool in_parent, env_var *environ)
+int	handle_builtin(t_cmd_tree *cmd_lst, bool in_parent, t_env_var *environ)
 {
 	if (cmd_lst->err != 0)
 	{
@@ -25,7 +25,7 @@ int	handle_builtin(cmd_tree *cmd_lst, bool in_parent, env_var *environ)
 	exit(g_exit_status);
 }
 
-void	redir_files(cmd_tree *cmd_lst)
+void	redir_files(t_cmd_tree *cmd_lst)
 {
 	if (cmd_lst->infile != -1)
 	{
@@ -52,8 +52,10 @@ int	check_path(char **env)
 	return (0);
 }
 
-void	fork_correct(cmd_tree *cmd_lst, bool in_parent, env_var *environ)
+void	fork_correct(t_cmd_tree *cmd_lst, bool in_parent, t_env_var *environ)
 {
+	get_signals_child();
+
 	redir_files(cmd_lst);
 	if (run_builtin2(cmd_lst, environ))
 		exit(g_exit_status);
@@ -69,14 +71,17 @@ void	fork_correct(cmd_tree *cmd_lst, bool in_parent, env_var *environ)
 	exit(127);
 }
 
-int	exec_cmd(cmd_tree *cmd_lst, bool in_parent, env_var *environ)
+int	exec_cmd(t_cmd_tree *cmd_lst, bool in_parent, t_env_var *environ)
 {
-	pid_t	pid;
-	int		status;
+	pid_t				pid;
+	int					status;
+	struct sigaction	old_int;
+	struct sigaction	old_quit;
 
 	if ((in_parent && run_builtin(cmd_lst, environ))
 		|| var_lst(cmd_lst, environ))
 		return (0);
+	ignore_signals(&old_int, &old_quit);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -85,7 +90,7 @@ int	exec_cmd(cmd_tree *cmd_lst, bool in_parent, env_var *environ)
 	}
 	if (pid == 0)
 		fork_correct(cmd_lst, in_parent, environ);
+	activate_signals(&old_int, &old_quit);
 	waitpid(pid, &status, 0);
-	g_exit_status = WEXITSTATUS(status);
-	return (WEXITSTATUS(status));
+	return (get_exit_status(status));
 }

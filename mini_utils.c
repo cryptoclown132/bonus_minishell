@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 14:38:59 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/21 21:25:13 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 17:16:04 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,15 @@ int	ft_strcmp(const char *s1, const char *s2)
 			return (c[i] - d[i]);
 	}
 	return (0);
+}
+
+int	get_exit_status(int status)
+{
+	if (WIFEXITED(status))
+		g_exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_exit_status = 128 + WTERMSIG(status);
+	else
+		g_exit_status = 1;
+	return (g_exit_status);
 }

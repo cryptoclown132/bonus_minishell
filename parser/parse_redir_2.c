@@ -6,13 +6,13 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 23:11:57 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/24 23:11:58 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:14:03 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	input_redir(char *file, int infile, cmd_tree *cmd_node)
+int	input_redir(char *file, int infile, t_cmd_tree *cmd_node)
 {
 	if (infile != 0)
 		close(infile);
@@ -20,12 +20,13 @@ int	input_redir(char *file, int infile, cmd_tree *cmd_node)
 	if (infile == -1)
 	{
 		cmd_node->err = errno;
-		cmd_node->err_file = ft_strdup(file);
+		cmd_node->err_file = ft_strjoin(file, ": No such file or directory");
+		set_exit_status(cmd_node->err_file, 2);
 	}
 	return (infile);
 }
 
-int	output_redir(char *file, int outfile, cmd_tree *cmd_node)
+int	output_redir(char *file, int outfile, t_cmd_tree *cmd_node)
 {
 	if (outfile != 1)
 		close(outfile);
@@ -33,12 +34,13 @@ int	output_redir(char *file, int outfile, cmd_tree *cmd_node)
 	if (outfile == -1)
 	{
 		cmd_node->err = errno;
-		cmd_node->err_file = ft_strdup(file);
+		cmd_node->err_file = ft_strjoin(file, ": No such file or directory");
+		set_exit_status(cmd_node->err_file, 2);
 	}
 	return (outfile);
 }
 
-int	ft_append(char *file, int outfile, cmd_tree *cmd_node)
+int	ft_append(char *file, int outfile, t_cmd_tree *cmd_node)
 {
 	if (outfile != 1)
 		close(outfile);
@@ -46,13 +48,14 @@ int	ft_append(char *file, int outfile, cmd_tree *cmd_node)
 	if (outfile == -1)
 	{
 		cmd_node->err = errno;
-		cmd_node->err_file = ft_strdup(file);
+		cmd_node->err_file = ft_strjoin(file, ": No such file or directory");
+		set_exit_status(cmd_node->err_file, 2);
 	}
 	return (outfile);
 }
 
 void	here_doc(char *limiter, int *infile,
-	env_var environ, cmd_tree *cmd_node)
+	t_env_var environ, t_cmd_tree *cmd_node)
 {
 	int		fd[2];
 
@@ -62,6 +65,7 @@ void	here_doc(char *limiter, int *infile,
 	{
 		cmd_node->err = errno;
 		cmd_node->err_file = ft_strdup(limiter);
+		set_exit_status(cmd_node->err_file, 2);
 		return ;
 	}
 	here_doc_loop(limiter, fd[1], environ);
@@ -70,7 +74,7 @@ void	here_doc(char *limiter, int *infile,
 }
 
 void	parse_redirection(t_tokens **token_lst,
-		env_var environ, cmd_tree **cmd_node)
+		t_env_var environ, t_cmd_tree **cmd_node)
 {
 	char	*file;
 

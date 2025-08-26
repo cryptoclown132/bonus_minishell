@@ -6,13 +6,13 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 19:48:05 by fjerinic          #+#    #+#             */
-/*   Updated: 2025/08/21 11:37:43 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:05:02 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int	echo_check_args(cmd_tree *cmd_struct)
+static int	echo_check_args(t_cmd_tree *cmd_struct)
 {
 	if (!cmd_struct->exec.cmd_split[1])
 	{
@@ -25,7 +25,7 @@ static int	echo_check_args(cmd_tree *cmd_struct)
 	return (0);
 }
 
-static void	echo_no_n(cmd_tree *cmd_struct)
+static void	echo_no_n(t_cmd_tree *cmd_struct)
 {
 	int	n;
 
@@ -38,7 +38,7 @@ static void	echo_no_n(cmd_tree *cmd_struct)
 	}
 }
 
-static void	echo_n(cmd_tree *cmd_struct)
+static void	echo_n(t_cmd_tree *cmd_struct)
 {
 	int	n;
 
@@ -52,7 +52,7 @@ static void	echo_n(cmd_tree *cmd_struct)
 	ft_printf("\n");
 }
 
-void	echo(cmd_tree *cmd_struct)
+void	echo(t_cmd_tree *cmd_struct)
 {
 	if (echo_check_args(cmd_struct))
 		return ;

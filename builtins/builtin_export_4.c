@@ -6,13 +6,13 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/22 14:01:37 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/22 14:06:25 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:05:58 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	add_var_loop(env_var *environ, char **varcp, char *var)
+void	add_var_loop(t_env_var *environ, char **varcp, char *var)
 {
 	int	i;
 
@@ -30,7 +30,7 @@ void	add_var_loop(env_var *environ, char **varcp, char *var)
 	environ->vars[i] = NULL;
 }
 
-void	add_var(char *var, env_var *environ)
+void	add_var(char *var, t_env_var *environ)
 {
 	int		i;
 	char	**varcp;
@@ -87,7 +87,7 @@ int	find_var_in_env(char **vars, char *var)
 	return (0);
 }
 
-int	var_lst(cmd_tree *cmd_lst, env_var *environ)
+int	var_lst(t_cmd_tree *cmd_lst, t_env_var *environ)
 {
 	int	i;
 

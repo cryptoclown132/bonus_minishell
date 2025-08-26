@@ -6,15 +6,15 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 23:18:36 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/24 23:56:38 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:14:40 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-cmd_tree	*new_node(node_type t)
+t_cmd_tree	*new_node(t_node_type t)
 {
-	cmd_tree	*n;
+	t_cmd_tree	*n;
 
 	n = ft_calloc(1, sizeof(*n));
 	n->type = t;
@@ -67,7 +67,7 @@ char	*check_for_open_and(char *input)
 	return (input);
 }
 
-cmd_tree	*parse(cmd_tree *cmd_lst, char **input, env_var environ)
+t_cmd_tree	*parse(t_cmd_tree *cmd_lst, char **input, t_env_var environ)
 {
 	t_tokens	*token_lst;
 	int			prev_exit_status;
@@ -83,7 +83,7 @@ cmd_tree	*parse(cmd_tree *cmd_lst, char **input, env_var environ)
 	*input = check_for_open_and(*input);
 	if (g_exit_status == 2 || g_exit_status == 130)
 	{
-		free(*input);
+		// free(*input);
 		if (cmd_lst)
 			cmd_lst->err = -2;
 		return (cmd_lst);

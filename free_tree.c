@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 14:06:21 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/24 22:54:37 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:15:32 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	free_string_array(char **arr)
 	free(arr);
 }
 
-void	close_file(cmd_tree *node)
+void	close_file(t_cmd_tree *node)
 {
 	if (node->infile > 0)
 		close(node->infile);
@@ -34,14 +34,14 @@ void	close_file(cmd_tree *node)
 		free(node->err_file);
 }
 
-void	free_exec_node(cmd_tree *node)
+void	free_exec_node(t_cmd_tree *node)
 {
 	free_string_array(node->exec.cmd_split);
 	if (node->exec.cmd_path)
 		free(node->exec.cmd_path);
 }
 
-void	free_cmd_tree(cmd_tree *node)
+void	free_cmd_tree(t_cmd_tree *node)
 {
 	if (!node)
 		return ;

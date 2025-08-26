@@ -6,7 +6,7 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:41:15 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/25 00:04:42 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:15:44 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ int	execute_node(cmd_tree *cmd_lst, bool in_parent, env_var *environ)
 }
 
 // sub*: ambiguous redirect
-// << sub* dont work multiple files
+// << sub* dont work  and needs to be checked multiple files
 // cat < test -> works onnly 1 file
-
+// < sdgs
+// bash: sdgs: No such file or directory
 int	main(int argc, char *argv[], char **envp)
 {
-	cmd_tree	*cmd_lst;
-	env_var		environ;
+	t_cmd_tree	*cmd_lst;
+	t_env_var		environ;
 
 	cmd_lst = NULL;
 	if (argc > 1)

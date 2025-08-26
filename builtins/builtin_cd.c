@@ -6,13 +6,13 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/08 19:52:10 by fjerinic          #+#    #+#             */
-/*   Updated: 2025/08/24 22:51:43 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:04:41 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*get_env(env_var *environ, char *str)
+char	*get_env(t_env_var *environ, char *str)
 {
 	char	*env_return;
 	int		i;
@@ -34,7 +34,7 @@ char	*get_env(env_var *environ, char *str)
 	return (env_return);
 }
 
-int	find_pwd_index(env_var *environ)
+int	find_pwd_index(t_env_var *environ)
 {
 	int	i;
 
@@ -50,7 +50,7 @@ int	find_pwd_index(env_var *environ)
 	return (i);
 }
 
-static void	update_env(env_var *environ, char *new_pwd_path,
+static void	update_env(t_env_var *environ, char *new_pwd_path,
 				char *old_pwd_path)
 {
 	int	i;
@@ -77,7 +77,7 @@ static void	update_env(env_var *environ, char *new_pwd_path,
 	}
 }
 
-int	run_cd_home(cmd_tree *cmd_lst, char *old_path, env_var *environ)
+int	run_cd_home(t_cmd_tree *cmd_lst, char *old_path, t_env_var *environ)
 {
 	char	*env_return;
 
@@ -102,7 +102,7 @@ int	run_cd_home(cmd_tree *cmd_lst, char *old_path, env_var *environ)
 	return (0);
 }
 
-void	cd(cmd_tree *cmd_lst, env_var *environ)
+void	cd(t_cmd_tree *cmd_lst, t_env_var *environ)
 {
 	char	*old_path;
 	char	*new_path;

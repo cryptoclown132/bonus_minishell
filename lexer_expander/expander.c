@@ -6,13 +6,13 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 15:01:04 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/22 14:50:06 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:10:36 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*get_var(char *token, env_var environ)
+char	*get_var(char *token, t_env_var environ)
 {
 	char		*var_value;
 	t_get_var	v;
@@ -33,7 +33,7 @@ char	*get_var(char *token, env_var environ)
 	return (var_value);
 }
 
-char	*expander(char *token, env_var environ)
+char	*expander(char *token, t_env_var environ)
 {
 	t_expan	e;
 

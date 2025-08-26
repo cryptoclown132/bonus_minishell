@@ -6,13 +6,13 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:11:27 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/24 13:34:44 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:11:28 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_tokens	*lexer_2(char *input, int *i, env_var environ)
+t_tokens	*lexer_2(char *input, int *i, t_env_var environ)
 {
 	t_tokens	*token;
 
@@ -41,7 +41,7 @@ t_tokens	*lexer_2(char *input, int *i, env_var environ)
 	return (token);
 }
 
-t_tokens	*lexer(t_tokens *token_lst, char *input, env_var environ)
+t_tokens	*lexer(t_tokens *token_lst, char *input, t_env_var environ)
 {
 	int			i;
 	t_tokens	*token;

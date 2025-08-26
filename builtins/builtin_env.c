@@ -6,13 +6,13 @@
 /*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 00:43:18 by fjerinic          #+#    #+#             */
-/*   Updated: 2025/08/12 19:37:02 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 18:05:08 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	env(env_var *environ)
+void	env(t_env_var *environ)
 {
 	int		i;
 
