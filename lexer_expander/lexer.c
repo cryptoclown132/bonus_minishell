@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:11:27 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/26 18:11:28 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/26 20:36:10 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	add_token(t_tokens **token_lst, t_tokens *token)
+{
+	t_tokens	*first;
+
+	first = *token_lst;
+	if (*token_lst == NULL)
+		*token_lst = token;
+	else
+	{
+		while (first->next != NULL)
+			first = first->next;
+		first->next = token;
+	}
+}
 
 t_tokens	*lexer_2(char *input, int *i, t_env_var environ)
 {

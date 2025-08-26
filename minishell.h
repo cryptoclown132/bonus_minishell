@@ -6,14 +6,12 @@
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 14:34:39 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/26 20:17:39 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/26 20:34:52 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-// #define _GNU_SOURCE 
 
 # include "libft/libft.h"
 # include <stdio.h>
@@ -26,10 +24,6 @@
 # include <sys/ioctl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-// # include </opt/homebrew/opt/readline/include/readline/readline.h>
-// # include </opt/homebrew/opt/readline/include/readline/history.h>
-// # include </opt/homebrew/opt/readline/include/readline/rlstdc.h>
-
 # include <sys/wait.h>
 # include <stdbool.h>
 # include <termios.h>
@@ -43,9 +37,6 @@
 // Mac
 #  define PATH_SIZE 1024
 # endif
-
-# define READ_END 0
-# define WRITE_END 1
 
 extern int	g_exit_status;
 
@@ -132,9 +123,6 @@ typedef struct s_get_var
 {
 	int		i;
 	int		j;
-	// int		k;
-	// char	*var_value;
-	// char	*tmp;
 }	t_get_var;
 
 typedef struct s_expan
@@ -188,7 +176,8 @@ int			exec_cmd(t_cmd_tree *cmd_lst, bool in_parent, t_env_var *environ);
 int			exec_and(t_cmd_tree *cmd_lst, t_env_var *environ);
 int			exec_or(t_cmd_tree *cmd_lst, t_env_var *environ);
 int			exec_subshell(t_cmd_tree *cmd_lst, t_env_var *environ);
-int			execute_node(t_cmd_tree *cmd_lst, bool in_parent, t_env_var *environ);
+int			execute_node(t_cmd_tree *cmd_lst, bool in_parent,
+				t_env_var *environ);
 
 /************/
 /* builtins */
@@ -291,7 +280,8 @@ char		*expander(char *token, t_env_var environ);
 /* env_var_utils.c */
 char		*var_finder(t_env_var environ, char *var);
 void		var_exist(char *token, t_env_var environ, int *i, char **var_value);
-void		cat_var(char *token, t_env_var environ, char **var_value, t_get_var *v);
+void		cat_var(char *token, t_env_var environ, char **var_value,
+				t_get_var *v);
 
 int			get_len(char *token, t_env_var environ);
 char		*get_var(char *token, t_env_var environ);
@@ -315,14 +305,16 @@ t_cmd_tree	*parse_and(t_tokens **token_lst, t_env_var environ);
 t_cmd_tree	*parse_pipeline(t_tokens **token_lst, t_env_var environ);
 
 /* init_cmd_tree.c */
-int			init_cmd_tree(t_tokens **token_lst, t_cmd_tree **cmd_lst, t_env_var environ);
+int			init_cmd_tree(t_tokens **token_lst, t_cmd_tree **cmd_lst,
+				t_env_var environ);
 
 /* free_tree.c */
 void		free_string_array(char **arr);
 void		free_cmd_tree(t_cmd_tree *node);
 
 /* parse_cmd.c */
-void		parse_command(t_tokens **token_lst, t_env_var environ, t_cmd_tree **cmd_node);
+void		parse_command(t_tokens **token_lst, t_env_var environ,
+				t_cmd_tree **cmd_node);
 
 /* heredoc_utils.c */
 void		here_doc_loop(char	*limiter, int fd, t_env_var environ);
@@ -345,14 +337,17 @@ int			count_env_len(char **envp);
 char		**copy_env(char **envp);
 
 /* parse_redir.c */
-void		parse_redirection(t_tokens **token_lst, t_env_var environ, t_cmd_tree **cmd_node);
+void		parse_redirection(t_tokens **token_lst, t_env_var environ,
+				t_cmd_tree **cmd_node);
 t_cmd_tree	*parse_cmd_sequence(t_tokens **token_lst, t_env_var environ);
 
 /* signals.c */
 void		get_signals(void);
 void		get_signals_child(void);
-void		ignore_signals(struct sigaction *old_int, struct sigaction *old_quit);
-void		activate_signals(struct sigaction *old_int, struct sigaction *old_quit);
+void		ignore_signals(struct sigaction *old_int,
+				struct sigaction *old_quit);
+void		activate_signals(struct sigaction *old_int,
+				struct sigaction *old_quit);
 
 /* signals_2.c */
 void		ctrl_c(int status);
