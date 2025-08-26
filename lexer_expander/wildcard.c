@@ -7,6 +7,9 @@
 
 bool	path_matches(char *pattern, char *path, bool wildcard_active)
 {
+	if (*pattern == '*')
+	  return (path_matches(pattern + 1, path, true));
+
   // test for '\0'
 	if ((*pattern == '\0') && (*path == '\0'))
 		return (true);
@@ -16,9 +19,6 @@ bool	path_matches(char *pattern, char *path, bool wildcard_active)
     	return (true);
 	if (*pattern != '\0' && *path == '\0')
 		return (false);
-
-  if (*pattern == '*')
-    return (path_matches(pattern + 1, path + 1, true));
 
   if (*pattern == *path && !wildcard_active)
     return(path_matches(pattern + 1, path + 1, false));
