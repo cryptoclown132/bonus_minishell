@@ -5,15 +5,17 @@
 
 #include <stdio.h>
 
-bool   path_matches(char *pattern, char *path, bool wildcard_active)
+bool	path_matches(char *pattern, char *path, bool wildcard_active)
 {
   // test for '\0'
-  if ((*pattern == '\0') && (*path == '\0'))
-    return (true);
-  if (*pattern == '\0' && *path != '\0')
-    return (false);
-  if (*pattern != '\0' && *path == '\0')
-    return (false);
+	if ((*pattern == '\0') && (*path == '\0'))
+		return (true);
+	if (*pattern == '\0' && *path != '\0' && !wildcard_active)
+		return (false);
+	if (*pattern == '\0' && *path != '\0' && wildcard_active)
+    	return (true);
+	if (*pattern != '\0' && *path == '\0')
+		return (false);
 
   if (*pattern == '*')
     return (path_matches(pattern + 1, path + 1, true));
@@ -68,7 +70,7 @@ char  *wildcard(char *pattern)
   {
     if ((match_all && dirent->d_name[0] != '.')
       || (dirent->d_name[0] == '.' && match_hidden_files && path_matches(pattern, dirent->d_name, false))
-      || path_matches(pattern, dirent->d_name, false))
+      || (path_matches(pattern, dirent->d_name, false) && dirent->d_name[0]!= '.'))
       append_path(&matching_paths, dirent->d_name);
   }
 
