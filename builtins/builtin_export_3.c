@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 17:12:06 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/26 19:42:13 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/27 11:01:27 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	export_without_args(t_env_var *environ)
 
 int	export_err(t_cmd_tree *cmd, char *str, int i, t_env_var *environ)
 {
-	if (str[0] == '-' && str[1] && i == 1)
+	if (str[0] == '-' && str[1] && i == 1) // change aswell
 	{
 		g_exit_status = 2;
 		printf("shell: export: %c%c: invalid option\n", str[0], str[1]);
@@ -85,7 +85,10 @@ int	export_err(t_cmd_tree *cmd, char *str, int i, t_env_var *environ)
 	if (!valid_input(str))
 	{
 		g_exit_status = 1;
-		printf("shell: export: `%s': not a valid identifier\n", str);
+		// printf("shell: export: `%s': not a valid identifier\n", str);
+		write(2, "shell: export: `", ft_strlen("shell: export: `"));
+		write(2, str, ft_strlen(str));
+		write(2, "': not a valid identifier\n", ft_strlen("': not a valid identifier\n"));
 		return (1);
 	}
 	if (!ft_strcmp("PWD", cmd->s_exec.cmd_split[i])

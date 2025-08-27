@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 13:39:19 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 19:40:43 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/27 12:17:26 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

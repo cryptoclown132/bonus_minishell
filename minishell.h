@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 14:34:39 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/26 20:34:52 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/27 13:15:36 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <termios.h>
 # include <sys/types.h>
 # include <dirent.h>
+# include <sys/stat.h>
 
 # ifdef __linux__
 // Linux
@@ -173,6 +174,7 @@ typedef struct s_run_commands
 
 int			exec_pipe(t_cmd_tree *cmd_lst, t_env_var *environ);
 int			exec_cmd(t_cmd_tree *cmd_lst, bool in_parent, t_env_var *environ);
+void		redir_files(t_cmd_tree *cmd_lst);
 int			exec_and(t_cmd_tree *cmd_lst, t_env_var *environ);
 int			exec_or(t_cmd_tree *cmd_lst, t_env_var *environ);
 int			exec_subshell(t_cmd_tree *cmd_lst, t_env_var *environ);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 11:10:15 by raweber           #+#    #+#             */
-/*   Updated: 2025/08/26 19:37:32 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/27 11:09:06 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ int	check_numeric(char *arg)
 	int	i;
 
 	i = 0;
+	while (arg[i] != '\0' && (arg[i] == 32 || arg[i] == '\t' || arg[i] == '\n'
+			|| arg[i] == '\r' || arg[i] == '\v' || arg[i] == '\f'))
+		i++;
+	if ((arg[i] == '+' || arg[i] == '-') && ft_isdigit(arg[i + 1]))
+		i++;
 	while (arg[i])
 	{
 		if (!ft_isdigit(arg[i]))

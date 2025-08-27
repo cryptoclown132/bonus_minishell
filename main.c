@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:41:15 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 21:22:32 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/27 11:31:12 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

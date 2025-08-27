@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 21:27:02 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 19:33:43 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/27 12:17:35 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

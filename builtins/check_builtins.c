@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 19:40:38 by fjerinic          #+#    #+#             */
-/*   Updated: 2025/08/26 21:51:08 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/27 13:03:01 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	exit_util(t_cmd_tree *cmd_lst, t_env_var *environ)
 {
-	if (cmd_lst->s_exec.cmd_split && !ft_strncmp(cmd_lst->s_exec.cmd_split[0], "exit", 5))
+	if (cmd_lst->s_exec.cmd_split && !ft_strncmp(cmd_lst->s_exec.cmd_split[cmd_lst->s_exec.idx_path], "exit", 5))
 	{
 		builtin_exit(cmd_lst, environ);
 		return (1);
@@ -24,7 +24,7 @@ int	exit_util(t_cmd_tree *cmd_lst, t_env_var *environ)
 
 int	unset_util(t_cmd_tree *cmd_lst, t_env_var *environ)
 {
-	if (cmd_lst->s_exec.cmd_split && !ft_strncmp(cmd_lst->s_exec.cmd_split[0], "unset", 6))
+	if (cmd_lst->s_exec.cmd_split && !ft_strncmp(cmd_lst->s_exec.cmd_split[cmd_lst->s_exec.idx_path], "unset", 6))
 	{
 		unset(cmd_lst, environ);
 		return (1);
@@ -46,17 +46,17 @@ void	try_env(t_cmd_tree *cmd_lst, t_env_var *environ)
 int	run_builtin(t_cmd_tree *cmd_lst, t_env_var *environ)
 {
 	get_signals_child();
-	if (cmd_lst->s_exec.cmd_split && !is_builtin(cmd_lst->s_exec.cmd_split[0]) && cmd_lst->err != 0)
-	{
-		set_err(cmd_lst->err_file, cmd_lst->err);
-		return (1);
-	}
-	if (cmd_lst->s_exec.cmd_split && !ft_strncmp(cmd_lst->s_exec.cmd_split[0], "cd", 3))
+	// if (cmd_lst->s_exec.cmd_split && !is_builtin(cmd_lst->s_exec.cmd_split[cmd_lst->s_exec.idx_path]) && cmd_lst->err != 0)
+	// {
+	// 	set_err(cmd_lst->err_file, cmd_lst->err);
+	// 	return (1);
+	// }
+	if (cmd_lst->s_exec.cmd_split && !ft_strncmp(cmd_lst->s_exec.cmd_split[cmd_lst->s_exec.idx_path], "cd", 3))
 	{
 		cd(cmd_lst, environ);
 		return (1);
 	}
-	else if (cmd_lst->s_exec.cmd_split && !ft_strncmp(cmd_lst->s_exec.cmd_split[0], "export", 7))
+	else if (cmd_lst->s_exec.cmd_split && !ft_strncmp(cmd_lst->s_exec.cmd_split[cmd_lst->s_exec.idx_path], "export", 7))
 	{
 		builtin_export(cmd_lst, environ);
 		return (1);
@@ -72,12 +72,13 @@ int	run_builtin2(t_cmd_tree *cmd_lst, t_env_var *environ)
 {
 	if (!cmd_lst->s_exec.cmd_split)
 		return (0);
-	if (!ft_strncmp(cmd_lst->s_exec.cmd_split[0], "echo", 5))
+	if (!ft_strncmp(cmd_lst->s_exec.cmd_split[cmd_lst->s_exec.idx_path], "echo", 5))
 	{
+		redir_files(cmd_lst);
 		echo(cmd_lst);
 		return (1);
 	}
-	else if (!ft_strncmp(cmd_lst->s_exec.cmd_split[0], "pwd", 4))
+	else if (!ft_strncmp(cmd_lst->s_exec.cmd_split[cmd_lst->s_exec.idx_path], "pwd", 4))
 	{
 		if (cmd_lst->s_exec.cmd_split[1]
 			&& cmd_lst->s_exec.cmd_split[1][0] == '-')
@@ -88,7 +89,7 @@ int	run_builtin2(t_cmd_tree *cmd_lst, t_env_var *environ)
 		pwd();
 		return (1);
 	}
-	else if (!ft_strncmp(cmd_lst->s_exec.cmd_split[0], "env", 4))
+	else if (!ft_strncmp(cmd_lst->s_exec.cmd_split[cmd_lst->s_exec.idx_path], "env", 4))
 	{
 		try_env(cmd_lst, environ);
 		return (1);

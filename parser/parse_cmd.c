@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
+/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 21:08:21 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 21:47:41 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/27 12:21:56 by julienkroge      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**get_cmd_split(t_tokens **token_lst)
 
 	sp.i = count_args(*token_lst);
 	if (!sp.i)
-		return NULL;
+		return (NULL);
 	sp.new_cmd_split = ft_calloc(sp.i + 1, sizeof(char *));
 	if (!sp.new_cmd_split)
 		return (set_exit_status("Failed to Malloc", 1));
@@ -104,7 +104,7 @@ void	parse_command(t_tokens **token_lst, t_env_var environ,
 	i = -1;
 	while ((*cmd_node)->s_exec.cmd_split && (*cmd_node)->s_exec.cmd_split[++i])
 	{
-		if (!ft_strchr((*cmd_node)->s_exec.cmd_split[i], '='))
+		if (!ft_strchr((*cmd_node)->s_exec.cmd_split[i], '=') && ft_strcmp((*cmd_node)->s_exec.cmd_split[i], ""))
 		{
 			(*cmd_node)->s_exec.cmd_path = get_cmd_path(environ,
 					(*cmd_node)->s_exec.cmd_split[i], *cmd_node);
