@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redir_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 23:11:57 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/27 13:59:08 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/27 16:15:19 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,10 @@ void	parse_redirection(t_tokens **token_lst,
 	t_token_type	prev;
 
 	prev = 100;
-	while (*token_lst && ((*token_lst)->type == TOK_IN
+	while (*token_lst && (((*token_lst)->type == TOK_IN
 			|| (*token_lst)->type == TOK_OUT || (*token_lst)->type == TOK_APP
-			|| (*token_lst)->type == TOK_DOC || ((*token_lst)->type == TOK_WORD
-				&& ((*cmd_node)->s_exec.cmd_path || ((*cmd_node)->s_exec.cmd_split)))))
+			|| (*token_lst)->type == TOK_DOC) || ((*token_lst)->type == TOK_WORD
+				&& ((*cmd_node)->s_exec.cmd_path || ((*cmd_node)->s_exec.cmd_split && ft_strcmp((*cmd_node)->s_exec.cmd_split[0], "echo"))))))
 	{
 		file = (*token_lst)->token;
 		if ((*token_lst)->type == TOK_IN || ((*token_lst)->type == TOK_WORD && prev == TOK_IN))

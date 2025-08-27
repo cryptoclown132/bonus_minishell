@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 14:34:39 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/27 13:15:36 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/27 14:49:05 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -359,6 +359,7 @@ void		ctrl_c_child(int status);
 char		*user_input(void);
 int			ft_strcmp(const char *s1, const char *s2);
 int			get_exit_status(int status);
+void		exit_correctly(int exit_code);
 
 /* mini_utils_2.c */
 char		*free_both_strjoin(char *s1, char *s2);

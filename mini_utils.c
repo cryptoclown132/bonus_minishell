@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 14:38:59 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/26 17:16:04 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/27 15:26:18 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,18 @@ int	get_exit_status(int status)
 	else
 		g_exit_status = 1;
 	return (g_exit_status);
+}
+
+void	exit_correctly(int exit_code)
+{
+	if (exit_code == 13)
+	{
+		set_exit_status("Error: is a directory", 126);
+		exit(126);
+	}
+	else
+	{
+		set_exit_status("Error: command not found", 127);
+		exit(127);
+	}
 }

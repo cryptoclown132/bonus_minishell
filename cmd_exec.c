@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 12:41:10 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/27 13:46:08 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/27 16:46:17 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	check_path(char **env)
 void	fork_correct(t_cmd_tree *cmd_lst, bool in_parent, t_env_var *environ)
 {
 	get_signals_child();
-	if (g_exit_status != 0 && cmd_lst->err && (cmd_lst->infile == -1 || cmd_lst->outfile == -1))
+	if (g_exit_status != 0 && cmd_lst->err && (cmd_lst->infile == -1
+			|| cmd_lst->outfile == -1))
 		exit(g_exit_status);
 	redir_files(cmd_lst);
 	if (run_builtin2(cmd_lst, environ))
@@ -70,16 +71,7 @@ void	fork_correct(t_cmd_tree *cmd_lst, bool in_parent, t_env_var *environ)
 	else
 		execve(cmd_lst->s_exec.cmd_path, cmd_lst->s_exec.cmd_split
 			+ cmd_lst->s_exec.idx_path, environ->vars);
-	if (errno == 13)
-	{
-		set_exit_status("Error: is a directory", 126);
-		exit(126);		
-	}
-	else
-	{
-		set_exit_status("Error: command not found", 127);
-		exit(127);
-	}
+	exit_correctly(errno);
 }
 
 int	exec_cmd(t_cmd_tree *cmd_lst, bool in_parent, t_env_var *environ)

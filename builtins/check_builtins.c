@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 19:40:38 by fjerinic          #+#    #+#             */
-/*   Updated: 2025/08/27 13:03:01 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/27 15:56:32 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

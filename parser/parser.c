@@ -6,7 +6,7 @@
 /*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 23:18:36 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/26 21:12:12 by jkroger          ###   ########.fr       */
+/*   Updated: 2025/08/27 15:51:39 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_cmd_tree	*new_node(t_node_type t)
 	n->outfile = -1;
 	n->err = 0;
 	n->err_file = NULL;
+	if (t == NODE_EXEC)
+		n->s_exec.cmd_split = NULL;
 	return (n);
 }
 

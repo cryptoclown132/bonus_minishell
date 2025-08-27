@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 21:08:21 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/27 12:21:56 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/27 16:01:58 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	count_wildcard_args(char **wildcard_args)
 	return (i);
 }
 
-int	count_args(t_tokens *token_lst)
+int	count_args(t_tokens *token_lst, char **cmd_split)
 {
 	int			i;
 	t_tokens	*tmp;
@@ -32,6 +32,8 @@ int	count_args(t_tokens *token_lst)
 
 	i = 0;
 	tmp = token_lst;
+	while (cmd_split && cmd_split[i])
+		i++;
 	while (tmp && (tmp->type == TOK_WORD || tmp->type == TOK_EQUAL
 			|| tmp->type == TOK_WILD))
 	{
@@ -47,11 +49,11 @@ int	count_args(t_tokens *token_lst)
 	return (i);
 }
 
-char	**get_cmd_split(t_tokens **token_lst)
+char	**get_cmd_split(t_tokens **token_lst, char **cmd_split)
 {
 	t_cmd_split	sp;
 
-	sp.i = count_args(*token_lst);
+	sp.i = count_args(*token_lst, cmd_split);
 	if (!sp.i)
 		return (NULL);
 	sp.new_cmd_split = ft_calloc(sp.i + 1, sizeof(char *));
@@ -60,6 +62,13 @@ char	**get_cmd_split(t_tokens **token_lst)
 	sp.j = 0;
 	while (sp.j < sp.i)
 	{
+		while (cmd_split && cmd_split[sp.j])
+		{
+			sp.new_cmd_split[sp.j] = ft_strdup(cmd_split[sp.j]);
+			free(cmd_split[sp.j++]);
+		}
+		if (cmd_split)
+			free(cmd_split);
 		if ((*token_lst)->type == TOK_WILD)
 		{
 			sp.wildcard_args = ft_split((*token_lst)->token, ' ');
@@ -98,7 +107,7 @@ void	parse_command(t_tokens **token_lst, t_env_var environ,
 		parse_subshell(token_lst, environ, cmd_node);
 		return ;
 	}
-	(*cmd_node)->s_exec.cmd_split = get_cmd_split(token_lst);
+	(*cmd_node)->s_exec.cmd_split = get_cmd_split(token_lst, (*cmd_node)->s_exec.cmd_split);
 	(*cmd_node)->s_exec.cmd_path = NULL;
 	(*cmd_node)->s_exec.idx_path = 0;
 	i = -1;

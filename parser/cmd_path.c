@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:16:41 by jkroger           #+#    #+#             */
-/*   Updated: 2025/08/26 18:11:47 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/27 16:46:33 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

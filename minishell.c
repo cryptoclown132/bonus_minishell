@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: julienkroger <julienkroger@student.42.f    +#+  +:+       +#+        */
+/*   By: jkroger <jkroger@student.42wolfsburg.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 21:25:54 by julienkroge       #+#    #+#             */
-/*   Updated: 2025/08/27 10:22:48 by julienkroge      ###   ########.fr       */
+/*   Updated: 2025/08/27 14:49:47 by jkroger          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int	minishell(t_cmd_tree *cmd_lst, t_env_var *environ)
 	cmd_lst = parse(cmd_lst, &input, *environ);
 	add_history(input);
 	free(input);
-	if (g_exit_status == 130 || g_exit_status == 2 || !cmd_lst
-		  ) // || g_exit_status != 0 || cmd_lst->err == -2
+	if (g_exit_status == 130 || g_exit_status == 2 || !cmd_lst)
 	{
 		free_cmd_tree(cmd_lst);
 		return (0);
